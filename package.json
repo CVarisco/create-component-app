@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "script to create react component from terminal in easy way",
   "bin": {
-    "create-component-app": "dist/index.js"
+    "create-component-app": "./dist/index.js"
   },
   "repository": "https://github.com/CVarisco/create-component-app.git",
   "author": "Christian Varisco <vari.chri1993@gmail.com>",

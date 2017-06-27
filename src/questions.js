@@ -7,6 +7,12 @@ const questions = [
   },
   {
     type: 'input',
+    name: 'name',
+    message: 'What is the name of the component?',
+    default: 'ComponentName',
+  },
+  {
+    type: 'input',
     name: 'path',
     message: 'Where do you want create your component?',
     default: './src/components',

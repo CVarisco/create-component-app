@@ -2,24 +2,18 @@
 
 import inquirer from 'inquirer'
 import fs from 'fs-extra'
-import generateTemplate from './templates'
+import { generateComponentTemplate, generateStyleFile } from './templates'
 import questions from './questions'
-
-async function createFiles(file, generatedTemplate) {
-  try {
-    await fs.outputFile(file, generatedTemplate)
-  } catch (e) {
-    console.log(e)
-  }
-}
 
 async function start() {
   try {
-    const { type, path } = await inquirer.prompt([questions[0], questions[1]])
-    const generatedTemplate = generateTemplate(type, 'Test')
-    const file = `${path}/test.js`
-    // Create file
-    await createFiles(file, generatedTemplate)
+    const { type, name, path } = await inquirer.prompt([questions[0], questions[1], questions[2]])
+
+    // Create css file
+    await fs.outputFile(`${path}/${name}.js`, generateComponentTemplate(type, name))
+
+    // Create js file
+    await fs.outputFile(`${path}/${name}.css`, generateStyleFile(name))
   } catch (e) {
     console.log(e)
   }

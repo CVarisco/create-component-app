@@ -1,13 +1,12 @@
 // @flow
 
 function generateClassComponent(COMPONENT_NAME: string): string {
-  return `
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+  return `import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 class ${COMPONENT_NAME} extends Component {
     constructor(props) {
-        super(props);
+        super(props)
     }
 
     render() {
@@ -17,11 +16,11 @@ class ${COMPONENT_NAME} extends Component {
     }
 }
 
-${COMPONENT_NAME}.propTypes = {};
+${COMPONENT_NAME}.propTypes = {}
 
-${COMPONENT_NAME}.defaultProps = {};
+${COMPONENT_NAME}.defaultProps = {}
 
-export default ${COMPONENT_NAME};
+export default ${COMPONENT_NAME}
 `
 }
 

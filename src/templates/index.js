@@ -1,8 +1,9 @@
 import generateClassComponent from './js/class.template'
 import generatePureComponent from './js/pure.template'
 import generateFunctionalComponent from './js/functional.template'
+import generateStyleFile from './css/style.template'
 
-function generateTemplate(type, name) {
+function generateComponentTemplate(type, name) {
   if (type === 'stateless') {
     return generateFunctionalComponent(name)
   }
@@ -18,4 +19,7 @@ function generateTemplate(type, name) {
   return null
 }
 
-export default generateTemplate
+export {
+  generateComponentTemplate,
+  generateStyleFile,
+}

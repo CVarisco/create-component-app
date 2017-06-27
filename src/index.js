@@ -7,7 +7,7 @@ import questions from './questions'
 
 async function start() {
   try {
-    const { type, name, path } = await inquirer.prompt([questions[0], questions[1], questions[2]])
+    const { type, name, path } = await inquirer.prompt(questions)
 
     // Create css file
     await fs.outputFile(`${path}/${name}.js`, generateComponentTemplate(type, name))

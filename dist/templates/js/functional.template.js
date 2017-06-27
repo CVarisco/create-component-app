@@ -1,0 +1,24 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+function generateFunctionalComponent(COMPONENT_NAME) {
+  return `
+import React from 'react';
+import PropTypes from 'prop-types';
+
+const ${COMPONENT_NAME} = ({}) => (
+  <div></div>
+);
+
+${COMPONENT_NAME}.propTypes = {};
+
+${COMPONENT_NAME}.defaultProps = {};
+
+export default ${COMPONENT_NAME};
+`;
+}
+
+exports.default = generateFunctionalComponent;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NyYy90ZW1wbGF0ZXMvanMvZnVuY3Rpb25hbC50ZW1wbGF0ZS5qcyJdLCJuYW1lcyI6WyJnZW5lcmF0ZUZ1bmN0aW9uYWxDb21wb25lbnQiLCJDT01QT05FTlRfTkFNRSJdLCJtYXBwaW5ncyI6Ijs7Ozs7QUFFQSxTQUFTQSwyQkFBVCxDQUFxQ0MsY0FBckMsRUFBcUU7QUFDbkUsU0FBUTs7OztRQUlGQSxjQUFlOzs7O0VBSXJCQSxjQUFlOztFQUVmQSxjQUFlOztpQkFFQUEsY0FBZTtDQVo5QjtBQWNEOztrQkFFY0QsMkIiLCJmaWxlIjoiZnVuY3Rpb25hbC50ZW1wbGF0ZS5qcyIsInNvdXJjZXNDb250ZW50IjpbIi8vIEBmbG93XG5cbmZ1bmN0aW9uIGdlbmVyYXRlRnVuY3Rpb25hbENvbXBvbmVudChDT01QT05FTlRfTkFNRTogc3RyaW5nKTogc3RyaW5nIHtcbiAgcmV0dXJuIGBcbmltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCc7XG5pbXBvcnQgUHJvcFR5cGVzIGZyb20gJ3Byb3AtdHlwZXMnO1xuXG5jb25zdCAke0NPTVBPTkVOVF9OQU1FfSA9ICh7fSkgPT4gKFxuICA8ZGl2PjwvZGl2PlxuKTtcblxuJHtDT01QT05FTlRfTkFNRX0ucHJvcFR5cGVzID0ge307XG5cbiR7Q09NUE9ORU5UX05BTUV9LmRlZmF1bHRQcm9wcyA9IHt9O1xuXG5leHBvcnQgZGVmYXVsdCAke0NPTVBPTkVOVF9OQU1FfTtcbmBcbn1cblxuZXhwb3J0IGRlZmF1bHQgZ2VuZXJhdGVGdW5jdGlvbmFsQ29tcG9uZW50XG4iXX0=

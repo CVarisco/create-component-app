@@ -1,0 +1,5 @@
+{
+  "type": "custom",
+  "templatesPath": "./customTemplates",
+  "path": "./tmp"
+}

@@ -7,8 +7,17 @@ import { generateComponentTemplate, generateStyleFile, generateIndexFile } from 
 import questions from './questions'
 
 // Dynamically import the config file if exist
-const configPath = yargs.argv.config
-const config = configPath ? require(`${process.cwd()}/${configPath}`) : null
+let config = null
+const argsConfigPath = yargs.argv.config
+const directoryConfig = `${process.cwd()}/.ccarc`
+    
+    if (fs.existsSync(directoryConfig)) {
+        config = JSON.parse(fs.readFileSync(directoryConfig, "utf8"))
+    }
+    
+    if (argsConfigPath){
+        config = require(`${process.cwd()}/${argsConfigPath}`)
+    }
 
 /**
  * Generate component files
@@ -37,15 +46,14 @@ function generateFiles({ type, name, path, indexFile, cssExtension, jsExtension,
  */
 function generateQuestions() {
   const questionKeys = Object.keys(questions)
-
+  
   if (!config) {
     return questionKeys.map(question => questions[question])
   }
 
   const filteredQuestions = []
-
   questionKeys.forEach((question) => {
-    if (!config[question]) {
+    if (!config.hasOwnProperty(question)) {
       filteredQuestions.push(questions[question])
     }
   })

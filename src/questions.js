@@ -33,7 +33,7 @@ const questions = {
     type: 'list',
     name: 'cssExtension',
     message: 'What kind of extension do you use for css files ?',
-    choices: ['css', 'scss', 'sass', 'less'],
+    choices: ['css', 'scss', 'sass', 'less', 'skip'],
   },
   path: {
     type: 'input',

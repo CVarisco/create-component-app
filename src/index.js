@@ -25,11 +25,13 @@ function generateFiles({ type, name, path, indexFile, cssExtension, jsExtension,
   if (indexFile || connected) {
     fs.outputFile(`${destination}/index.js`, generateIndexFile(name, connected))
   }
-    // Create js file
+  // Create js file
   fs.outputFile(`${destination}/${name}.${jsExtension}`, generateComponentTemplate(type, name))
 
+  if (cssExtension !== 'skip') {
     // Create css file
-  fs.outputFile(`${destination}/${name}.${cssExtension}`, generateStyleFile(name))
+    fs.outputFile(`${destination}/${name}.${cssExtension}`, generateStyleFile(name))
+  }
 }
 
 /**

@@ -1,6 +1,4 @@
-// @flow
-
-function generateStyleFile(COMPONENT_NAME: string): string {
+function generateStyleFile(COMPONENT_NAME) {
   return `.${COMPONENT_NAME}{}`
 }
 

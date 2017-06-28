@@ -1,8 +1,5 @@
-// @flow
-
-function generatePureComponent(COMPONENT_NAME: string): string {
-  return `
-import React, { PureComponent } from 'react'
+function generatePureComponent(COMPONENT_NAME) {
+  return `import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
 class ${COMPONENT_NAME} extends PureComponent {
@@ -12,7 +9,7 @@ class ${COMPONENT_NAME} extends PureComponent {
 
     render() {
         return (
-            <div></div>
+            <div className="${COMPONENT_NAME}"></div>
         );
     }
 }

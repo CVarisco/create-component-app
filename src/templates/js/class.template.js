@@ -1,6 +1,4 @@
-// @flow
-
-function generateClassComponent(COMPONENT_NAME: string): string {
+function generateClassComponent(COMPONENT_NAME) {
   return `import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
@@ -8,10 +6,10 @@ class ${COMPONENT_NAME} extends Component {
     constructor(props) {
         super(props)
     }
-
+    
     render() {
         return (
-            <div></div>
+            <div className="${COMPONENT_NAME}"></div>
         );
     }
 }

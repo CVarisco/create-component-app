@@ -72,11 +72,12 @@ async function start() {
     }
 
     if (results.type === 'custom') {
-      return generateFilesFromCustom(results)
+      generateFilesFromCustom(results)
+    } else {
+      generateFiles(results)
     }
-    // Generate default structure
-    generateFiles(results)
-    return console.log('Your component is created!')
+
+    console.log('Your component is created!')
   } catch (e) {
     console.log(e)
   }

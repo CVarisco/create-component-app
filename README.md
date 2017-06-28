@@ -39,7 +39,7 @@ If you want, you can set default values from a JSON:
     // Default extension for your javascript file ["js", "jsx"]
     "jsExtension": "js",
 
-    // Default extension for your css file ["css", "scss", "sass"]
+    // Default extension for your css file ["css", "scss", "sass", "less"]
     "cssExtension": "css",
 
     // Default flag to create an index file in the folder [false, true]

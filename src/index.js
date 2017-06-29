@@ -2,14 +2,14 @@
 
 import inquirer from 'inquirer'
 import yargs from 'yargs'
-
+import fs from 'fs-extra'
 import { generateFiles, generateFilesFromCustom } from './files'
 import questions from './questions'
 
 // Dynamically import the config file if exist
 let config = null
 const argsConfigPath = yargs.argv.config
-const directoryConfig = `${process.cwd()}/.ccarc`
+const directoryConfig = `${process.cwd()}/.ccarc/config.json`
 
 // Check if exist the default directory of configuration
 if (fs.existsSync(directoryConfig)) {

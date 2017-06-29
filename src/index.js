@@ -10,14 +10,16 @@ import questions from './questions'
 let config = null
 const argsConfigPath = yargs.argv.config
 const directoryConfig = `${process.cwd()}/.ccarc`
-    
-    if (fs.existsSync(directoryConfig)) {
-        config = JSON.parse(fs.readFileSync(directoryConfig, "utf8"))
-    }
-    
-    if (argsConfigPath){
-        config = require(`${process.cwd()}/${argsConfigPath}`)
-    }
+
+// Check if exist the default directory of configuration
+if (fs.existsSync(directoryConfig)) {
+  config = JSON.parse(fs.readFileSync(directoryConfig, 'utf8'))
+}
+
+// Override the config object from the directory if exist --config
+if (argsConfigPath) {
+  config = require(`${process.cwd()}/${argsConfigPath}`)
+}
 
 /**
  * Generate component files
@@ -46,7 +48,7 @@ function generateFiles({ type, name, path, indexFile, cssExtension, jsExtension,
  */
 function generateQuestions() {
   const questionKeys = Object.keys(questions)
-  
+
   if (!config) {
     return questionKeys.map(question => questions[question])
   }

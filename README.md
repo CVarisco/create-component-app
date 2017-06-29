@@ -22,11 +22,26 @@ $ npm install -g create-component-app
 ```sh
 $ cd ~/my-projects
 $ create-component-app
+```    
+
+### You can create a configuration file in your current project directory    
+
+Create a file in your project folder named `.ccarc`:    
+
+```javascript
+{   
+    "type": "stateless", 
+    "path": "./src/components",
+    "jsExtension": "js",
+    "cssExtension": "scss",
+    "indexFile": false,
+    "connected": false
+}
 ```
 
-### You can specify default values to save a lot of time
+### You can also pass a config file directory
 
-If you want, you can set default values from a JSON:  
+Create a JSON file `config.json`:  
 
 ```javascript
 {   
@@ -53,7 +68,9 @@ If you want, you can set default values from a JSON:
 and pass the path to config param
 ```sh
 $ create-component-app --config path/to/your/config.json
-```
+```    
+
+Passing a config file via the CLI overrides the configuration file in the working directory
 
 ## Future
 

@@ -1,9 +1,13 @@
 # create-component-app
 
-<p align="center">
-<strong>How much time do you spend copying and pasting the component folder to create a new one ?</strong><br />
-This is a tool to generate different types of React components from the terminal.
-</p>
+**How much time do you spend copying and pasting the component folder to create a new one ?**<br />
+This is a tool to generate different types of React components from the terminal.<br />
+
+What you can do with this tool ?<br />
+
+- [You can create a configuration file in your current project directory](#you-can-create-a-configuration-file-in-your current-project-directory)
+- [You can also pass a configuration file from params](#you-can-also-pass-a-config-file)
+- [You can use your own custom templates](#you-can-use-your-own-custom-templates)
 
 <br />
 
@@ -24,13 +28,13 @@ $ cd ~/my-projects
 $ create-component-app
 ```    
 
-### You can create a configuration file in your current project directory    
+### You can create a configuration file in your current project directory
 
 Create a file in your project folder named `.ccarc`:    
 
 ```javascript
 {   
-    "type": "stateless", 
+    "type": "stateless",
     "path": "./src/components",
     "jsExtension": "js",
     "cssExtension": "scss",
@@ -39,14 +43,14 @@ Create a file in your project folder named `.ccarc`:
 }
 ```
 
-### You can also pass a config file directory
+### You can also pass a config file
 
 Create a JSON file `config.json`:  
 
 ```javascript
 {   
     // Default type of component ["stateless", "class", "pure"]
-    "type": "stateless", 
+    "type": "stateless",
 
     // Default path to create component file and folder
     "path": "./src/components",
@@ -70,13 +74,28 @@ and pass the path to config param
 $ create-component-app --config path/to/your/config.json
 ```    
 
-Passing a config file via the CLI overrides the configuration file in the working directory
+**Passing a config file via the CLI overrides the configuration file in the working directory**
+
+### You can use your own custom templates
+
+1) Create a folder with all the files and put the `COMPONENT_NAME` constant to replace the name of your component.
+*Note: the extension of the file will be used*  
+
+2) Specify the `templatePath` in the configuration object and set the `type:"custom"`   
+
+```javascript
+{
+    "type": "custom",
+    "templatesPath": "./customTemplates"
+}
+```
+
+**NOTE: With this configuration, you can add only the `path` parameter to set the default destination**
 
 ## Future
 
 - Template to test the component
 - Adds the ability to insert component life cycle methods
-- Get custom templates from user
 - A lot more options
 
 ## Contributing

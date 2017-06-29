@@ -7,8 +7,19 @@ import { generateFiles, generateFilesFromCustom } from './files'
 import questions from './questions'
 
 // Dynamically import the config file if exist
-const configPath = yargs.argv.config
-const config = configPath ? require(`${process.cwd()}/${configPath}`) : null
+let config = null
+const argsConfigPath = yargs.argv.config
+const directoryConfig = `${process.cwd()}/.ccarc`
+
+// Check if exist the default directory of configuration
+if (fs.existsSync(directoryConfig)) {
+  config = JSON.parse(fs.readFileSync(directoryConfig, 'utf8'))
+}
+
+// Override the config object from the directory if exist --config
+if (argsConfigPath) {
+  config = require(`${process.cwd()}/${argsConfigPath}`)
+}
 
 /**
  * If the user want to use custom templates, return filtered questions
@@ -45,9 +56,8 @@ function generateQuestions() {
 
   // filter questions from config object
   const filteredQuestions = []
-
   questionKeys.forEach((question) => {
-    if (!config[question]) {
+    if (!config.hasOwnProperty(question)) {
       filteredQuestions.push(questions[question])
     }
   })

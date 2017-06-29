@@ -1,6 +1,6 @@
 {
   "name": "create-component-app",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Tool to generate different types of React components from the terminal.",
   "bin": {
     "create-component-app": "./dist/index.js"

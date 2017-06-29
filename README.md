@@ -81,6 +81,7 @@ $ create-component-app --config path/to/your/config.json
 
 1) Create a folder with all the files and put the `COMPONENT_NAME` constant to replace the name of your component.
 *Note: the extension of the file will be used (so, use whatever you want)*  
+*Note: file with name "index" will not renamed*  
 
 2) Specify the `templatePath` in the configuration object and set the `type:"custom"`:  
 

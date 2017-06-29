@@ -4,7 +4,7 @@ import { generateComponentTemplate, generateStyleFile, generateIndexFile } from 
 /**
  * Get the extension from the filename
  */
-function getExtension(fileName){
+function getExtension(fileName) {
   const splittedFilename = fileName.split('.')
   return splittedFilename[splittedFilename.length - 1]
 }

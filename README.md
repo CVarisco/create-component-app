@@ -5,6 +5,7 @@ This is a tool to generate different types of React components from the terminal
 
 What you can do with this tool ?<br />
 
+- Create your components guided from terminal with a lot of choices
 - [You can create a configuration file in your current project directory](#you-can-create-a-configuration-file-in-your-current-project-directory)
 - [You can also pass a configuration file from params](#you-can-also-pass-a-config-file)
 - [You can use your own custom templates](#you-can-use-your-own-custom-templates)

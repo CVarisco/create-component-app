@@ -45,7 +45,7 @@ Create a file in your project folder named `.ccarc`:
 
 ### You can also pass a config file
 
-Create a JSON file `config.json`:  
+1) Create a JSON file `config.json`:  
 
 ```javascript
 {   
@@ -69,7 +69,8 @@ Create a JSON file `config.json`:
 }
 ```
 
-and pass the path to config param
+2) and pass the path to config param
+
 ```sh
 $ create-component-app --config path/to/your/config.json
 ```    
@@ -79,9 +80,9 @@ $ create-component-app --config path/to/your/config.json
 ### You can use your own custom templates
 
 1) Create a folder with all the files and put the `COMPONENT_NAME` constant to replace the name of your component.
-*Note: the extension of the file will be used*  
+*Note: the extension of the file will be used (so, use whatever you want)*  
 
-2) Specify the `templatePath` in the configuration object and set the `type:"custom"`   
+2) Specify the `templatePath` in the configuration object and set the `type:"custom"`:  
 
 ```javascript
 {

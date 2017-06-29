@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 
 import inquirer from 'inquirer'
-import fs from 'fs-extra'
 import yargs from 'yargs'
-import { generateComponentTemplate, generateStyleFile, generateIndexFile } from './templates'
+import fs from 'fs-extra'
+import { generateFiles, generateFilesFromCustom } from './files'
 import questions from './questions'
 
 // Dynamically import the config file if exist
 let config = null
 const argsConfigPath = yargs.argv.config
-const directoryConfig = `${process.cwd()}/.ccarc`
+const directoryConfig = `${process.cwd()}/.ccarc/config.json`
 
 // Check if exist the default directory of configuration
 if (fs.existsSync(directoryConfig)) {
@@ -22,25 +22,21 @@ if (argsConfigPath) {
 }
 
 /**
- * Generate component files
- *
- * @param {type} type of component template
- * @param {name} the name of the component used to create folder and file
- * @param {path} where the component folder is created
- * @param {cssExtension} the extension of the css file
- * @param {jsExtension} the extension of the css file
+ * If the user want to use custom templates, return filtered questions
+ * for only custom configuration
  */
-function generateFiles({ type, name, path, indexFile, cssExtension, jsExtension, connected }) {
-  const destination = `${path}/${name}`
+function generateQuestionsCustom() {
+  const mandatoryQuestions = [
+    questions.name,
+    questions.path,
+  ]
 
-  if (indexFile || connected) {
-    fs.outputFile(`${destination}/index.js`, generateIndexFile(name, connected))
-  }
-    // Create js file
-  fs.outputFile(`${destination}/${name}.${jsExtension}`, generateComponentTemplate(type, name))
-
-    // Create css file
-  fs.outputFile(`${destination}/${name}.${cssExtension}`, generateStyleFile(name))
+  return mandatoryQuestions.filter((question) => {
+    if (config[question.name]) {
+      return false
+    }
+    return true
+  })
 }
 
 /**
@@ -53,6 +49,12 @@ function generateQuestions() {
     return questionKeys.map(question => questions[question])
   }
 
+  // If type is custom, filter question mandatory to work
+  if (config.type === 'custom') {
+    return generateQuestionsCustom()
+  }
+
+  // filter questions from config object
   const filteredQuestions = []
   questionKeys.forEach((question) => {
     if (!config.hasOwnProperty(question)) {
@@ -72,7 +74,6 @@ function generateQuestions() {
 async function start() {
   try {
     const filteredQuestions = generateQuestions()
-
     const requirements = await inquirer.prompt(filteredQuestions)
 
     const results = {
@@ -80,7 +81,11 @@ async function start() {
       ...requirements,
     }
 
-    generateFiles(results)
+    if (results.type === 'custom') {
+      generateFilesFromCustom(results)
+    } else {
+      generateFiles(results)
+    }
 
     console.log('Your component is created!')
   } catch (e) {

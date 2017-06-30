@@ -1,6 +1,6 @@
 function generateReduxConnect(COMPONENT_NAME) {
-  return `import template from './${COMPONENT_NAME}.js'
-import { connect } from 'react-redux';
+  return `import ${COMPONENT_NAME} from './${COMPONENT_NAME}.js'
+import { connect } from 'react-redux'
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {}
@@ -8,14 +8,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 const mapStateToProps = (state, ownProps) => {
     return {};
-};
+}
 
-const ${COMPONENT_NAME} = connect(
+export default connect(
     mapStateToProps,
     mapDispatchToProps,
-)(${COMPONENT_NAME});
-
-export default ${COMPONENT_NAME}`
+)(${COMPONENT_NAME})
+`
 }
 
 function generateIndexFile(COMPONENT_NAME, connected) {
@@ -23,9 +22,9 @@ function generateIndexFile(COMPONENT_NAME, connected) {
     return generateReduxConnect(COMPONENT_NAME)
   }
 
-  return `import template from './${COMPONENT_NAME}.js';
+  return `import template from './${COMPONENT_NAME}.js'
 
-const ${COMPONENT_NAME} = template;
+const ${COMPONENT_NAME} = template
 
 export default ${COMPONENT_NAME}
 `

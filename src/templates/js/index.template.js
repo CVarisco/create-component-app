@@ -22,9 +22,7 @@ function generateIndexFile(COMPONENT_NAME, connected) {
     return generateReduxConnect(COMPONENT_NAME)
   }
 
-  return `import template from './${COMPONENT_NAME}.js'
-
-const ${COMPONENT_NAME} = template
+  return `import ${COMPONENT_NAME} from './${COMPONENT_NAME}.js'
 
 export default ${COMPONENT_NAME}
 `

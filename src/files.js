@@ -3,6 +3,7 @@ import { generateComponentTemplate, generateStyleFile, generateIndexFile } from 
 
 /**
  * Get the extension from the filename
+ * @param {string} fileName
  */
 function getExtension(fileName) {
   const splittedFilename = fileName.split('.')
@@ -11,6 +12,8 @@ function getExtension(fileName) {
 
 /**
  * readFile fs promise wrapped
+ * @param {string} path
+ * @param {string} fileName
  */
 function readFile(path, fileName) {
   return new Promise((resolve, reject) => {
@@ -23,12 +26,16 @@ function readFile(path, fileName) {
     })
   })
 }
-/*
+
+/**
  * check if already exist in the folder the same file name
  * If already exist, use the name
+ * @param {string} newFilePath
+ * @param {string} newFileName
+ * @param {string} fileName
  */
 function generateFileName(newFilePath, newFileName, fileName) {
-  // Suppose that the index file don't be renamed
+    // Suppose that the index file don't be renamed
   if (fileName.indexOf('index') !== -1) {
     return fileName
   }
@@ -42,21 +49,25 @@ function generateFileName(newFilePath, newFileName, fileName) {
 /**
  * Generate component files from custom templates folder
  * Get every single file in the
- * @param {name} the name of the component used to create folder and file
- * @param {path} where the component folder is created
- * @param {templatesPath} where the custom templates are
+ * @param {string} the name of the component used to create folder and file
+ * @param {string} where the component folder is created
+ * @param {string} where the custom templates are
  */
 async function generateFilesFromCustom({ name, path, templatesPath }) {
   try {
     const files = fs.readdirSync(templatesPath)
 
     files.map(async (templateFileName) => {
-      // Get the template content
+            // Get the template content
       const content = await readFile(templatesPath, templateFileName)
       const replaced = content.replace(/COMPONENT_NAME/g, name)
-      // Exist ?
-      const newFileName = generateFileName(`${path}/${name}/`, `${name}.${getExtension(templateFileName)}`, templateFileName)
-      // Write the new file with the new content
+            // Exist ?
+      const newFileName = generateFileName(
+                `${path}/${name}/`,
+                `${name}.${getExtension(templateFileName)}`,
+                templateFileName
+            )
+            // Write the new file with the new content
       fs.outputFile(`${path}/${name}/${newFileName}`, replaced)
     })
   } catch (e) {
@@ -67,11 +78,11 @@ async function generateFilesFromCustom({ name, path, templatesPath }) {
 /**
  * Generate component files
  *
- * @param {type} type of component template
- * @param {name} the name of the component used to create folder and file
- * @param {path} where the component folder is created
- * @param {cssExtension} the extension of the css file
- * @param {jsExtension} the extension of the css file
+ * @param {string} type of component template
+ * @param {string} the name of the component used to create folder and file
+ * @param {string} where the component folder is created
+ * @param {boolean} the extension of the css file
+ * @param {boolean} the extension of the css file
  */
 function generateFiles({ type, name, path, indexFile, cssExtension, jsExtension, connected }) {
   const destination = `${path}/${name}`
@@ -86,7 +97,4 @@ function generateFiles({ type, name, path, indexFile, cssExtension, jsExtension,
   fs.outputFile(`${destination}/${name}.${cssExtension}`, generateStyleFile(name))
 }
 
-export {
-  generateFiles,
-  generateFilesFromCustom,
-}
+export { generateFiles, generateFilesFromCustom }

@@ -1,6 +1,6 @@
 {
   "name": "create-component-app",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "Tool to generate different types of React components from the terminal.",
   "bin": {
     "create-component-app": "./dist/index.js"
@@ -25,9 +25,9 @@
     "build": "src/**/*.js"
   },
   "dependencies": {
-    "fs-extra": "^3.0.1",
-    "inquirer": "^3.0.6",
-    "yargs": "^8.0.2"
+    "fs-extra": "3.0.1",
+    "inquirer": "3.0.6",
+    "yargs": "8.0.2"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",

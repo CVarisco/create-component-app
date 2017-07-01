@@ -1,4 +1,7 @@
 # create-component-app
+[![npm version](https://badge.fury.io/js/create-component-app.svg)](https://badge.fury.io/js/create-component-app)
+[![Code Climate](https://codeclimate.com/github/CVarisco/create-component-app/badges/gpa.svg)](https://codeclimate.com/github/CVarisco/create-component-app)
+[![npm](https://img.shields.io/npm/dw/create-component-app.svg)](https://www.npmjs.com/package/create-component-app)
 
 **How much time do you spend copying and pasting the component folder to create a new one ?**<br />
 This is a tool to generate different types of React components from the terminal.<br />
@@ -13,9 +16,8 @@ What you can do with this tool ?<br />
 <br />
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/7335613/27637827-5a2c1dba-5c11-11e7-8676-deeb230086dc.gif" alt="create-component-app" width="1024" />
+  <img src="https://user-images.githubusercontent.com/7335613/27760854-9ff86b54-5e51-11e7-8ad0-3289d9b3ebc3.gif" alt="create-component-app" width="1024" />
 </p>
-
 
 
 ## Install
@@ -129,7 +131,6 @@ $ create-component-app --config path/to/your/config.json
 
 ## Future
 
-- Template to test the component
 - Adds the ability to insert component life cycle methods
 - A lot more options
 

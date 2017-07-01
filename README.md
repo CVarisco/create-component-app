@@ -5,7 +5,7 @@ This is a tool to generate different types of React components from the terminal
 
 What you can do with this tool ?<br />
 
-- Create your components guided from terminal with a lot of choices
+- [Create your components guided from terminal with a lot of choices](#create-your-components-guided-from-terminal-with-a-lot-of-choices)
 - [You can create a configuration file in your current project directory](#you-can-create-a-configuration-file-in-your-current-project-directory)
 - [You can also pass a configuration file from params](#you-can-also-pass-a-config-file)
 - [You can use your own custom templates](#you-can-use-your-own-custom-templates)
@@ -15,6 +15,8 @@ What you can do with this tool ?<br />
 <p align="center">
   <img src="https://user-images.githubusercontent.com/7335613/27637827-5a2c1dba-5c11-11e7-8676-deeb230086dc.gif" alt="create-component-app" width="1024" />
 </p>
+
+
 
 ## Install
 
@@ -29,6 +31,28 @@ $ cd ~/my-projects
 $ create-component-app
 ```    
 
+### Create your components guided from terminal with a lot of choices
+
+- Create different kind of components:
+    - stateless
+    - class
+    - pure
+    - custom
+- Set name of the new component
+- Integrate `connect` function of redux
+- Include an index file
+- Set a different component extension
+    - `js`
+    - `jsx`
+- Set a different style extension
+    - `css`
+    - `scss`
+    - `sass`
+    - `less`
+- Include a storybook file
+- Include a test file (with enzyme)
+- Set the destionation `path` of the new component
+
 ### You can create a configuration file in your current project directory
 
 Create a file in your project folder named `.ccarc`:    
@@ -39,6 +63,8 @@ Create a file in your project folder named `.ccarc`:
     "path": "./src/components",
     "jsExtension": "js",
     "cssExtension": "scss",
+    "includeTests": false,
+    "includeStories": false,
     "indexFile": false,
     "connected": false
 }
@@ -61,6 +87,12 @@ Create a file in your project folder named `.ccarc`:
 
     // Default extension for your css file ["css", "scss", "sass", "less"]
     "cssExtension": "css",
+
+    // Default flag to include a test file in the folder [true, false]
+    "includeTests": true,
+
+    // Default flag to include a storybook file in the folder [true, false]
+    "includeStories": true,
 
     // Default flag to create an index file in the folder [false, true]
     "indexFile": false,

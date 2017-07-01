@@ -1,5 +1,11 @@
 import fs from 'fs-extra'
-import { generateComponentTemplate, generateStyleFile, generateIndexFile } from './templates'
+import {
+  generateComponentTemplate,
+  generateStyleFile,
+  generateIndexFile,
+  generateTestTemplate,
+  generateStorybookTemplate,
+} from './templates'
 
 /**
  * Get the extension from the filename
@@ -35,7 +41,7 @@ function readFile(path, fileName) {
  * @param {string} fileName
  */
 function generateFileName(newFilePath, newFileName, fileName) {
-    // Suppose that the index file don't be renamed
+  // Suppose that the index file don't be renamed
   if (fileName.indexOf('index') !== -1) {
     return fileName
   }
@@ -58,16 +64,16 @@ async function generateFilesFromCustom({ name, path, templatesPath }) {
     const files = fs.readdirSync(templatesPath)
 
     files.map(async (templateFileName) => {
-            // Get the template content
+      // Get the template content
       const content = await readFile(templatesPath, templateFileName)
       const replaced = content.replace(/COMPONENT_NAME/g, name)
-            // Exist ?
+      // Exist ?
       const newFileName = generateFileName(
-                `${path}/${name}/`,
-                `${name}.${getExtension(templateFileName)}`,
-                templateFileName
-            )
-            // Write the new file with the new content
+        `${path}/${name}/`,
+        `${name}.${getExtension(templateFileName)}`,
+        templateFileName
+      )
+      // Write the new file with the new content
       fs.outputFile(`${path}/${name}/${newFileName}`, replaced)
     })
   } catch (e) {
@@ -84,17 +90,52 @@ async function generateFilesFromCustom({ name, path, templatesPath }) {
  * @param {boolean} the extension of the css file
  * @param {boolean} the extension of the css file
  */
-function generateFiles({ type, name, path, indexFile, cssExtension, jsExtension, connected }) {
+function generateFiles(params) {
+  const {
+    type,
+    name,
+    path,
+    indexFile,
+    cssExtension,
+    jsExtension,
+    connected,
+    includeStories,
+    includeTests,
+  } = params
   const destination = `${path}/${name}`
 
   if (indexFile || connected) {
-    fs.outputFile(`${destination}/index.js`, generateIndexFile(name, connected))
+    fs.outputFile(
+      `${destination}/index.js`,
+      generateIndexFile(name, connected)
+    )
   }
-    // Create js file
-  fs.outputFile(`${destination}/${name}.${jsExtension}`, generateComponentTemplate(type, name))
 
-    // Create css file
-  fs.outputFile(`${destination}/${name}.${cssExtension}`, generateStyleFile(name))
+  if (includeStories) {
+    fs.outputFile(
+      `${destination}/${name}.stories.${jsExtension}`,
+      generateStorybookTemplate(name)
+    )
+  }
+
+  if (includeTests) {
+    fs.outputFile(
+      `${destination}/${name}.tests.${jsExtension}`,
+      generateTestTemplate(name)
+    )
+  }
+
+  // Create js file
+  fs.outputFile(
+    `${destination}/${name}.${jsExtension}`,
+    generateComponentTemplate(type, name)
+  )
+
+  // Create css file
+  fs.outputFile(
+    `${destination}/${name}.${cssExtension}`,
+    generateStyleFile(name)
+  )
 }
 
 export { generateFiles, generateFilesFromCustom }

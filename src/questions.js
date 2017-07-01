@@ -35,6 +35,18 @@ const questions = {
     message: 'What kind of extension do you use for css files ?',
     choices: ['css', 'scss', 'sass', 'less'],
   },
+  includeStories: {
+    type: 'confirm',
+    name: 'includeStories',
+    message: 'Do you want a storybook file?',
+    default: true,
+  },
+  includeTests: {
+    type: 'confirm',
+    name: 'includeTests',
+    message: 'Do you want a test file?',
+    default: true,
+  },
   path: {
     type: 'input',
     name: 'path',

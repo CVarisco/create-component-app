@@ -26,10 +26,7 @@ if (argsConfigPath) {
  * for only custom configuration
  */
 function generateQuestionsCustom() {
-  const mandatoryQuestions = [
-    questions.name,
-    questions.path,
-  ]
+  const mandatoryQuestions = [questions.name, questions.path]
 
   return mandatoryQuestions.filter((question) => {
     if (config[question.name]) {

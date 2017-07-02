@@ -13,7 +13,13 @@ import {
  */
 function getExtension(fileName) {
   const splittedFilename = fileName.split('.')
-  return splittedFilename[splittedFilename.length - 1]
+  const length = splittedFilename.length
+
+  if (splittedFilename[1] === 'tests') {
+    return `${splittedFilename[length - 2]}.${splittedFilename[length - 1]}`
+  }
+
+  return splittedFilename[length - 1]
 }
 
 /**

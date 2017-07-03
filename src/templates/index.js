@@ -12,8 +12,8 @@ const types = {
   pure: generatePureComponent,
 }
 
-function generateComponentTemplate(type, name) {
-  return types[type](name)
+function generateComponentTemplate(type, name, options) {
+  return types[type](name, options)
 }
 
 export {

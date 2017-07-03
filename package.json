@@ -18,7 +18,8 @@
     "lint": "eslint src test",
     "build": "babel src -d dist",
     "watch": "npm-watch",
-    "try": "node ./dist/index.js"
+    "try": "node ./dist/index.js",
+    "test": "jest --watch"
   },
   "watch": {
     "lint": "src/**/*.js",
@@ -37,6 +38,10 @@
     "eslint": "^3.14.0",
     "eslint-config-airbnb-base": "^11.0.1",
     "eslint-plugin-import": "^2.2.0",
+    "jest": "^20.0.4",
     "npm-watch": "^0.1.7"
+  },
+  "jest": {
+    "testRegex": "\\.tests\\.js$"
   }
 }

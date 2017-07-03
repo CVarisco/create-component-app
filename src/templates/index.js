@@ -12,12 +12,13 @@ const types = {
   pure: generatePureComponent,
 }
 
-function generateComponentTemplate(type, name, options) {
+function generateComponentTemplate(type, name, options = {}) {
   return types[type](name, options)
 }
 
 export {
   generateComponentTemplate,
+  generateClassComponent,
   generateStyleFile,
   generateIndexFile,
   generateTestTemplate,

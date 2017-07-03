@@ -1,12 +1,12 @@
-import template from './functional.template'
+import template from '../class.template'
 
-describe('Functional Template', () => {
+describe('Class Template', () => {
   it('should a string', () => {
     expect(typeof template()).toBe('string')
   })
 
-  it('should create const with component name', () => {
-    expect(template('Foo')).toContain('const Foo = ({}) =>')
+  it('should have class with component name', () => {
+    expect(template('Foo')).toContain('class Foo extends Component')
   })
 
   it('should extend component with propTypes', () => {

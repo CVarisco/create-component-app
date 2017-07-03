@@ -1,4 +1,4 @@
-import template from './style.template'
+import template from '../style.template'
 
 describe('Class Template', () => {
   it('should a string', () => {

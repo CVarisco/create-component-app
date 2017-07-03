@@ -7,21 +7,21 @@ const mockIndexTemplate = jest.fn()
 const mockStyleTemplate = jest.fn()
 
 jest
-  .mock('./js/class.template', () => mockClassTemplate)
-  .mock('./js/pure.template', () => mockPureTemplate)
-  .mock('./js/functional.template', () => mockFunctionalTemplate)
-  .mock('./js/test.template', () => mockTestTemplate)
-  .mock('./js/storybook.template', () => mockStorybookTemplate)
-  .mock('./js/index.template', () => mockIndexTemplate)
-  .mock('./css/style.template', () => mockStyleTemplate)
+    .mock('../js/class.template', () => mockClassTemplate)
+    .mock('../js/pure.template', () => mockPureTemplate)
+    .mock('../js/functional.template', () => mockFunctionalTemplate)
+    .mock('../js/test.template', () => mockTestTemplate)
+    .mock('../js/storybook.template', () => mockStorybookTemplate)
+    .mock('../js/index.template', () => mockIndexTemplate)
+    .mock('../css/style.template', () => mockStyleTemplate)
 
 const {
-  generateComponentTemplate,
-  generateStyleFile,
-  generateIndexFile,
-  generateTestTemplate,
-  generateStorybookTemplate,
-} = require('./index')
+    generateComponentTemplate,
+    generateStyleFile,
+    generateIndexFile,
+    generateTestTemplate,
+    generateStorybookTemplate,
+} = require('../index')
 
 describe('Template index', () => {
   afterEach(() => {

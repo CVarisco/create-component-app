@@ -1,12 +1,12 @@
-import template from './class.template'
+import template from '../pure.template'
 
-describe('Class Template', () => {
+describe('Pure Template', () => {
   it('should a string', () => {
     expect(typeof template()).toBe('string')
   })
 
   it('should have class with component name', () => {
-    expect(template('Foo')).toContain('class Foo extends Component')
+    expect(template('Foo')).toContain('class Foo extends PureComponent')
   })
 
   it('should extend component with propTypes', () => {

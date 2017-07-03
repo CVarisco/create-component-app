@@ -1,4 +1,4 @@
-import template from './storybook.template'
+import template from '../storybook.template'
 
 describe('Storybook Template', () => {
   it('should a string', () => {
@@ -6,10 +6,10 @@ describe('Storybook Template', () => {
   })
 
   it('should import component for story book', () => {
-    expect(template('Foo')).toContain('import Foo from \'./Foo\'')
+    expect(template('Foo')).toContain("import Foo from './Foo'")
   })
 
   it('should crate story with component name', () => {
-    expect(template('Foo')).toContain('storiesOf(\'Foo\', module)')
+    expect(template('Foo')).toContain("storiesOf('Foo', module)")
   })
 })

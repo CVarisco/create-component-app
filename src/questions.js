@@ -32,8 +32,14 @@ const questions = {
   cssExtension: {
     type: 'list',
     name: 'cssExtension',
-    message: 'What kind of extension do you use for css files ?',
-    choices: ['css', 'scss', 'sass', 'less'],
+    message: 'What kind of extension do you use for style file ?',
+    choices: ['css', 'scss', 'sass', 'less', "I don't want a style file"],
+    filter: (input) => {
+      if (input === "I don't want a style file") {
+        return false
+      }
+      return input
+    },
   },
   includeStories: {
     type: 'confirm',

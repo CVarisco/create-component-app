@@ -1,6 +1,8 @@
-function generateClassComponent(COMPONENT_NAME) {
-  return `import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import generateImports from './common.template'
+import defaultOptions from './config.json'
+
+function generateClassComponent(COMPONENT_NAME, { cssExtension } = defaultOptions) {
+  return `${generateImports(COMPONENT_NAME, { cssExtension })}
 
 class ${COMPONENT_NAME} extends Component {
     constructor(props) {

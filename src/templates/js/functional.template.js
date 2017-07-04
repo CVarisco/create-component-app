@@ -1,6 +1,8 @@
-function generateFunctionalComponent(COMPONENT_NAME) {
-  return `import React from 'react'
-import PropTypes from 'prop-types'
+import generateImports from './common.template'
+import defaultOptions from './config.json'
+
+function generateFunctionalComponent(COMPONENT_NAME, { cssExtension } = defaultOptions) {
+  return `${generateImports(COMPONENT_NAME, { cssExtension })}
 
 const ${COMPONENT_NAME} = ({}) => (
   <div className="${COMPONENT_NAME}"></div>

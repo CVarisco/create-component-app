@@ -1,6 +1,8 @@
-function generatePureComponent(COMPONENT_NAME) {
-  return `import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
+import generateImports from './common.template'
+import defaultOptions from './config.json'
+
+function generatePureComponent(COMPONENT_NAME, { cssExtension } = defaultOptions) {
+  return `${generateImports(COMPONENT_NAME, { cssExtension })}
 
 class ${COMPONENT_NAME} extends PureComponent {
     constructor(props) {

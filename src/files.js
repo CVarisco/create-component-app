@@ -123,7 +123,11 @@ function generateFiles(params) {
   }
 
   // Create js file
-  fs.outputFile(`${destination}/${name}.${jsExtension}`, generateComponentTemplate(type, name))
+  fs.outputFile(
+    `${destination}/${name}.${jsExtension}`,
+    generateComponentTemplate(type, name, { cssExtension })
+  )
+
   // Create css file
   if (cssExtension) {
     fs.outputFile(`${destination}/${name}.${cssExtension}`, generateStyleFile(name))

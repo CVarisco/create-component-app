@@ -31,17 +31,17 @@ describe('Template index', () => {
 
   it('should call class.template when class is passed into generateComponentTemplate', () => {
     generateComponentTemplate('class', 'test')
-    expect(mockClassTemplate).toHaveBeenCalledWith('test')
+    expect(mockClassTemplate).toHaveBeenCalledWith('test', {})
   })
 
   it('should call pure.template when pure is passed into generateComponentTemplate', () => {
     generateComponentTemplate('pure', 'test')
-    expect(mockPureTemplate).toHaveBeenCalledWith('test')
+    expect(mockPureTemplate).toHaveBeenCalledWith('test', {})
   })
 
   it('should call functional.template when stateless is passed into generateComponentTemplate', () => {
     generateComponentTemplate('stateless', 'test')
-    expect(mockFunctionalTemplate).toHaveBeenCalledWith('test')
+    expect(mockFunctionalTemplate).toHaveBeenCalledWith('test', {})
   })
 
   it('should export generateIndexFile with correct module', () => {

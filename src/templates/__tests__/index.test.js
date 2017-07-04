@@ -1,4 +1,5 @@
 const mockClassTemplate = jest.fn()
+const mockCommonTemplate = jest.fn()
 const mockPureTemplate = jest.fn()
 const mockFunctionalTemplate = jest.fn()
 const mockTestTemplate = jest.fn()
@@ -7,20 +8,21 @@ const mockIndexTemplate = jest.fn()
 const mockStyleTemplate = jest.fn()
 
 jest
-  .mock('../js/class.template', () => mockClassTemplate)
-  .mock('../js/pure.template', () => mockPureTemplate)
-  .mock('../js/functional.template', () => mockFunctionalTemplate)
-  .mock('../js/test.template', () => mockTestTemplate)
-  .mock('../js/storybook.template', () => mockStorybookTemplate)
-  .mock('../js/index.template', () => mockIndexTemplate)
-  .mock('../css/style.template', () => mockStyleTemplate)
+    .mock('../js/common.template', () => mockCommonTemplate)
+    .mock('../js/class.template', () => mockClassTemplate)
+    .mock('../js/pure.template', () => mockPureTemplate)
+    .mock('../js/functional.template', () => mockFunctionalTemplate)
+    .mock('../js/test.template', () => mockTestTemplate)
+    .mock('../js/storybook.template', () => mockStorybookTemplate)
+    .mock('../js/index.template', () => mockIndexTemplate)
+    .mock('../css/style.template', () => mockStyleTemplate)
 
 const {
-  generateComponentTemplate,
-  generateStyleFile,
-  generateIndexFile,
-  generateTestTemplate,
-  generateStorybookTemplate,
+    generateComponentTemplate,
+    generateStyleFile,
+    generateIndexFile,
+    generateTestTemplate,
+    generateStorybookTemplate,
 } = require('../index')
 
 describe('Template index', () => {
@@ -29,25 +31,24 @@ describe('Template index', () => {
     jest.resetAllMocks()
   })
 
+  it('should call generateImports when class is passed into generateComponentTemplate', () => {
+    generateComponentTemplate('class', 'test')
+    expect(mockCommonTemplate).toHaveBeenCalled()
+  })
+
   it('should call class.template when class is passed into generateComponentTemplate', () => {
-    generateComponentTemplate('class', 'test', { cssExtension: 'css' })
-    expect(mockClassTemplate).toHaveBeenCalledWith('test', {
-      cssExtension: 'css',
-    })
+    generateComponentTemplate('class', 'test')
+    expect(mockClassTemplate).toHaveBeenCalledWith('test')
   })
 
   it('should call pure.template when pure is passed into generateComponentTemplate', () => {
-    generateComponentTemplate('pure', 'test', { cssExtension: 'css' })
-    expect(mockPureTemplate).toHaveBeenCalledWith('test', {
-      cssExtension: 'css',
-    })
+    generateComponentTemplate('pure', 'test')
+    expect(mockPureTemplate).toHaveBeenCalledWith('test')
   })
 
   it('should call functional.template when stateless is passed into generateComponentTemplate', () => {
-    generateComponentTemplate('stateless', 'test', { cssExtension: 'css' })
-    expect(mockFunctionalTemplate).toHaveBeenCalledWith('test', {
-      cssExtension: 'css',
-    })
+    generateComponentTemplate('stateless', 'test')
+    expect(mockFunctionalTemplate).toHaveBeenCalledWith('test')
   })
 
   it('should export generateIndexFile with correct module', () => {

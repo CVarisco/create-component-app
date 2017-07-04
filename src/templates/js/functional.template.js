@@ -1,6 +1,7 @@
 import generateImports from './common.template'
+import defaultOptions from './config.json'
 
-function generateFunctionalComponent(COMPONENT_NAME, { cssExtension }) {
+function generateFunctionalComponent(COMPONENT_NAME, { cssExtension } = defaultOptions) {
   return `${generateImports(COMPONENT_NAME, { cssExtension })}
 
 const ${COMPONENT_NAME} = ({}) => (

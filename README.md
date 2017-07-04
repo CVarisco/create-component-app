@@ -87,7 +87,8 @@ Create a file in your project folder named `.ccarc`:
     // Default extension for your javascript file ["js", "jsx"]
     "jsExtension": "js",
 
-    // Default extension for your css file ["css", "scss", "sass", "less"]
+    // Default extension for your css file ["css", "scss", "sass", "less", false]
+    // Set to false if you don't want a style file
     "cssExtension": "css",
 
     // Default flag to include a test file in the folder [true, false]

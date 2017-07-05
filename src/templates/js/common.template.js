@@ -16,8 +16,8 @@ ${cssExtension ? `import styles from './${COMPONENT_NAME}.${cssExtension}'` : ''
 }
 
 export function generateClassComponent(
-  COMPONENT_NAME, 
-  componentType, 
+  COMPONENT_NAME,
+  componentType,
   { cssExtension } = defaultOptions
 ) {
   return `${generateImports(COMPONENT_NAME, componentType, { cssExtension })}

@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "lint": "eslint src test",
-    "build": "babel src -d dist",
+    "build": "babel src -d dist --copy-files",
     "watch": "npm-watch",
     "try": "node ./dist/index.js",
     "test": "jest",

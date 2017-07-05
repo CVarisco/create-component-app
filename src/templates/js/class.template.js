@@ -1,8 +1,8 @@
 import generateImports from './common.template'
 import defaultOptions from './config.json'
 
-function generateClassComponent(COMPONENT_NAME, { cssExtension } = defaultOptions) {
-  return `${generateImports(COMPONENT_NAME, { cssExtension })}
+function generateClassComponent(COMPONENT_NAME, componentType, { cssExtension } = defaultOptions) {
+  return `${generateImports(COMPONENT_NAME, componentType, { cssExtension })}
 
 class ${COMPONENT_NAME} extends Component {
     constructor(props) {

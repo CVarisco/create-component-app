@@ -13,7 +13,7 @@ const types = {
 }
 
 function generateComponentTemplate(type, name, options = {}) {
-  return types[type](name, options)
+  return types[type](name, type, options)
 }
 
 export {

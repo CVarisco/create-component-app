@@ -6,18 +6,18 @@ describe('Class Template', () => {
   })
 
   it('should have class with component name', () => {
-    expect(template('Foo')).toContain('class Foo extends Component')
+    expect(template('Foo', 'class')).toContain('class Foo extends Component')
   })
 
   it('should extend component with propTypes', () => {
-    expect(template('Foo')).toContain('Foo.propTypes')
+    expect(template('Foo', 'class')).toContain('Foo.propTypes')
   })
 
   it('should extend component with defaultProps', () => {
-    expect(template('Foo')).toContain('Foo.defaultProps')
+    expect(template('Foo', 'class')).toContain('Foo.defaultProps')
   })
 
   it('should export component', () => {
-    expect(template('Foo')).toContain('export default Foo')
+    expect(template('Foo', 'class')).toContain('export default Foo')
   })
 })

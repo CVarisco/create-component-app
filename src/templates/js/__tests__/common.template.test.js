@@ -10,13 +10,13 @@ describe('Common Template', () => {
       'import PropTypes from \'prop-types\''
     )
   })
-  
+
   it('should import react when stateless', () => {
     expect(template('Foo', 'stateless')).toContain(
       'import React from \'react\''
     )
   })
-  
+
   it('should import react when class', () => {
     expect(template('Foo', 'class')).toContain(
       'import React, { Component } from \'react\''

@@ -15,7 +15,11 @@ import PropTypes from 'prop-types'
 ${cssExtension ? `import styles from './${COMPONENT_NAME}.${cssExtension}'` : ''}`
 }
 
-export function generateClassComponent(COMPONENT_NAME, componentType, { cssExtension } = defaultOptions) {
+export function generateClassComponent(
+  COMPONENT_NAME, 
+  componentType, 
+  { cssExtension } = defaultOptions
+) {
   return `${generateImports(COMPONENT_NAME, componentType, { cssExtension })}
 
 class ${COMPONENT_NAME} extends ${COMPONENT_TYPES[componentType]} {

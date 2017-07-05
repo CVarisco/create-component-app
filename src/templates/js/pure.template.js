@@ -1,4 +1,3 @@
-import generateImports, { generateClassComponent } from './common.template'
-import defaultOptions from './config.json'
+import { generateClassComponent } from './common.template'
 
-export default generateClassComponent;
+export default generateClassComponent

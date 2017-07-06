@@ -10,7 +10,7 @@ In this folder we will create the templates file.
 ### 2) Create your templates
 
 Create your templates file.
-The only thing that you need to set in the template is the name of the component.
+The only thing that you need to set in the template is the name of the component.   
 *Note: the extension of the file will be used (so, use whatever you want)*  
 *Note: file with name "index" will not renamed*  
 

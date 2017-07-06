@@ -91,3 +91,5 @@ async function start() {
 }
 
 start()
+
+export default { generateFiles, generateFilesFromCustom }

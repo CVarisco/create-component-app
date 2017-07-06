@@ -116,20 +116,7 @@ $ create-component-app --config path/to/your/config.json
 
 ### You can use your own custom templates
 
-1) Create a folder with all the files and put the `COMPONENT_NAME` constant to replace the name of your component.
-*Note: the extension of the file will be used (so, use whatever you want)*  
-*Note: file with name "index" will not renamed*  
-
-2) Specify the `templatePath` in the configuration object and set the `type:"custom"`:  
-
-```javascript
-{
-    "type": "custom",
-    "templatesPath": "./customTemplates"
-}
-```
-
-**NOTE: With this configuration, you can add only the `path` parameter to set the default destination. The others parameters will be ignored**
+Simple steps to create your own templates [docs/custom-templates](https://github.com/CVarisco/create-component-app/blob/master/docs/CUSTOM-TEMPLATE.md)
 
 ## Future
 

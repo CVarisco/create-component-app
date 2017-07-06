@@ -116,7 +116,7 @@ $ create-component-app --config path/to/your/config.json
 
 ### You can use your own custom templates
 
-Simple steps to create your own templates [docs/custom-templates](https://github.com/CVarisco/create-component-app/blob/master/docs/CUSTOM-TEMPLATE.md)
+Simple steps to create your own templates [docs/custom-templates](https://github.com/CVarisco/create-component-app/blob/master/docs/CUSTOM-TEMPLATES.md)
 
 ## Future
 

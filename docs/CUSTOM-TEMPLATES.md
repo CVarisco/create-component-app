@@ -10,7 +10,7 @@ In this folder we will create the templates file.
 ### 2) Create your templates
 
 Create your templates file.
-The only thing that you need to set in the template is the name of the component.
+The only thing that you need to set in the template is the name of the component.   
 *Note: the extension of the file will be used (so, use whatever you want)*  
 *Note: file with name "index" will not renamed*  
 
@@ -53,7 +53,7 @@ Example of custom style file `style.scss`:
 }
 ```
 
-### 4) Create a config file for the tool
+### 3) Create a config file for the tool
 
 Create a `config.json` (in the `.ccarc` folder or where you want) file where you write the options to generate your components from the custom templates.
 
@@ -66,7 +66,7 @@ config.json:
 }
 ```
 
-### 5) Launch the tool
+### 4) Launch the tool
 
 Launch the tool to generate components:
 

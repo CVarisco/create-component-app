@@ -9,7 +9,7 @@ import questions from './questions'
 // Dynamically import the config file if exist
 let config = null
 const argsConfigPath = yargs.argv.config
-const directoryConfig = `${process.cwd()}/.ccarc/config.json`
+const directoryConfig = `${process.cwd()}/.ccarc`
 
 // Check if exist the default directory of configuration
 if (fs.existsSync(directoryConfig)) {

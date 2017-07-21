@@ -63,14 +63,15 @@ Create a file in your project folder named `.ccarc`:
 
 ```javascript
 {   
-    "type": "stateless",
+    "type": "class",
     "path": "./src/components",
     "jsExtension": "js",
     "cssExtension": "scss",
     "includeTests": false,
     "includeStories": false,
     "indexFile": false,
-    "connected": false
+    "connected": false,
+    "componentMethods": ["componentDidMount", "shouldComponentUpdate", "onClick"]
 }
 ```
 
@@ -104,6 +105,9 @@ Create a file in your project folder named `.ccarc`:
 
     // Default flag to integrate connect redux in the index file [false, true]
     "connected": false,
+
+    // Only for "class" and "pure", insert method inside the component
+    "componentMethods": ["componentDidMount", "shouldComponentUpdate", "onClick"]
 }
 ```
 
@@ -119,12 +123,8 @@ $ create-component-app --config path/to/your/config.json
 
 Simple steps to create your own templates [docs/custom-templates](https://github.com/CVarisco/create-component-app/blob/master/docs/CUSTOM-TEMPLATES.md)
 
-## Future
-
-- Adds the ability to insert component life cycle methods
-- A lot more options
-
 ## Contributing
+Check the [issue list](https://github.com/CVarisco/create-component-app/issues) to contribute on some activities or to advice new features!
 The library is open to everybody, contribute improve your skills.   
 
 `create-component-app` is maintained under [the Semantic Versioning guidelines](http://semver.org/).

@@ -1,4 +1,4 @@
-import generateImports from './common.template'
+import { generateImports } from './common.template'
 import defaultOptions from './config.json'
 
 function generateFunctionalComponent(

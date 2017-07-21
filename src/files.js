@@ -103,6 +103,7 @@ function generateFiles(params) {
     path,
     indexFile,
     cssExtension,
+    componentMethods,
     jsExtension,
     connected,
     includeStories,
@@ -111,26 +112,38 @@ function generateFiles(params) {
   const destination = `${path}/${name}`
 
   if (indexFile || connected) {
-    fs.outputFile(`${destination}/index.js`, generateIndexFile(name, connected))
+    fs.outputFile(
+      `${destination}/index.js`,
+      generateIndexFile(name, connected)
+    )
   }
 
   if (includeStories) {
-    fs.outputFile(`${destination}/${name}.stories.${jsExtension}`, generateStorybookTemplate(name))
+    fs.outputFile(
+      `${destination}/${name}.stories.${jsExtension}`,
+      generateStorybookTemplate(name)
+    )
   }
 
   if (includeTests) {
-    fs.outputFile(`${destination}/${name}.tests.${jsExtension}`, generateTestTemplate(name))
+    fs.outputFile(
+      `${destination}/${name}.tests.${jsExtension}`,
+      generateTestTemplate(name)
+    )
   }
 
   // Create js file
   fs.outputFile(
     `${destination}/${name}.${jsExtension}`,
-    generateComponentTemplate(type, name, { cssExtension })
+    generateComponentTemplate(type, name, { cssExtension, componentMethods })
   )
 
   // Create css file
   if (cssExtension) {
-    fs.outputFile(`${destination}/${name}.${cssExtension}`, generateStyleFile(name))
+    fs.outputFile(
+      `${destination}/${name}.${cssExtension}`,
+      generateStyleFile(name)
+    )
   }
 }
 

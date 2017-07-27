@@ -88,6 +88,23 @@ async function generateFilesFromCustom({ name, path, templatesPath }) {
 }
 
 /**
+ * Return the default names replace from user filenames
+ * @param {object} fileNames object with the user selected filenames
+ * @param {string} componentName
+ * @return {object} with the correct filenames
+ */
+function getFileNames(fileNames, componentName) {
+  const defaultFileNames = {
+    testFileName: 'tests',
+    testFileMatch: componentName,
+    componentFileName: componentName,
+    styleFileName: componentName,
+  }
+
+  return { ...defaultFileNames, ...fileNames }
+}
+
+/**
  * Generate component files
  *
  * @param {string} type of component template
@@ -100,6 +117,7 @@ function generateFiles(params) {
   const {
     type,
     name,
+    fileNames,
     path,
     indexFile,
     cssExtension,
@@ -111,10 +129,17 @@ function generateFiles(params) {
   } = params
   const destination = `${path}/${name}`
 
+  const {
+    testFileName,
+    testFileMatch,
+    componentFileName,
+    styleFileName,
+  } = getFileNames(fileNames, name)
+
   if (indexFile || connected) {
     fs.outputFile(
       `${destination}/index.js`,
-      generateIndexFile(name, connected)
+      generateIndexFile(componentFileName, connected)
     )
   }
 
@@ -127,22 +152,26 @@ function generateFiles(params) {
 
   if (includeTests) {
     fs.outputFile(
-      `${destination}/${name}.tests.${jsExtension}`,
+      `${destination}/${testFileName}.${testFileMatch}.${jsExtension}`,
       generateTestTemplate(name)
     )
   }
 
   // Create js file
   fs.outputFile(
-    `${destination}/${name}.${jsExtension}`,
-    generateComponentTemplate(type, name, { cssExtension, componentMethods })
+    `${destination}/${componentFileName}.${jsExtension}`,
+    generateComponentTemplate(type, componentFileName, {
+      cssExtension,
+      componentMethods,
+      styleFileName,
+    })
   )
 
   // Create css file
   if (cssExtension) {
     fs.outputFile(
-      `${destination}/${name}.${cssExtension}`,
-      generateStyleFile(name)
+      `${destination}/${styleFileName}.${cssExtension}`,
+      generateStyleFile(styleFileName)
     )
   }
 }

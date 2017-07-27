@@ -23,19 +23,22 @@ function generateComponentMethods(componentMethods) {
 function generateImports(
   COMPONENT_NAME,
   componentType,
-  { cssExtension } = defaultOptions
+  { cssExtension, styleFileName } = defaultOptions
 ) {
   return `${generateReactImport(componentType)}
 import PropTypes from 'prop-types'
-${cssExtension ? `import styles from './${COMPONENT_NAME}.${cssExtension}'` : ''}`
+${cssExtension ? `import styles from './${styleFileName}.${cssExtension}'` : ''}`
 }
 
 function generateClassComponent(
   COMPONENT_NAME,
   componentType,
-  { cssExtension, componentMethods } = defaultOptions
+  { cssExtension, componentMethods, styleFileName } = defaultOptions
 ) {
-  return `${generateImports(COMPONENT_NAME, componentType, { cssExtension })}
+  return `${generateImports(COMPONENT_NAME, componentType, {
+    cssExtension,
+    styleFileName,
+  })}
 
 class ${COMPONENT_NAME} extends ${COMPONENT_TYPES[componentType]} {
     constructor(props) {

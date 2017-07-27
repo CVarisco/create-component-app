@@ -107,11 +107,17 @@ function getFileNames(fileNames, componentName) {
 /**
  * Generate component files
  *
- * @param {string} type of component template
- * @param {string} the name of the component used to create folder and file
- * @param {string} where the component folder is created
- * @param {boolean} the extension of the css file
- * @param {boolean} the extension of the css file
+ * @param {object} params object with:
+ * @param {string} type: the type of component template
+ * @param {string} name: the name of the component used to create folder and file
+ * @param {string} path: where the component folder is created
+ * @param {string} cssExtension: the extension of the css file
+ * @param {string} jsExtension: the extension of the component file
+ * @param {array} componentMethods: Array of strings of methods to include in a class component
+ * @param {boolean} indexFile: include or not an index file
+ * @param {boolean} connected: include or not the connect function of redux
+ * @param {boolean} includeStories: include or not the storybook file
+ * @param {boolean} includeTests: include or not the test file
  */
 function generateFiles(params) {
   const {

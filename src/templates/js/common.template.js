@@ -23,7 +23,10 @@ function generateComponentMethods(componentMethods) {
 function generateImports(
   COMPONENT_NAME,
   componentType,
-  { cssExtension, styleFileName } = defaultOptions
+  {
+    cssExtension = defaultOptions.defaultOptions,
+    styleFileName = defaultOptions.styleFileName,
+  } = defaultOptions
 ) {
   return `${generateReactImport(componentType)}
 import PropTypes from 'prop-types'
@@ -33,7 +36,11 @@ ${cssExtension ? `import styles from './${styleFileName}.${cssExtension}'` : ''}
 function generateClassComponent(
   COMPONENT_NAME,
   componentType,
-  { cssExtension, componentMethods, styleFileName } = defaultOptions
+  {
+    cssExtension = defaultOptions.defaultOptions,
+    componentMethods = defaultOptions.componentMethods,
+    styleFileName = defaultOptions.styleFileName,
+  }
 ) {
   return `${generateImports(COMPONENT_NAME, componentType, {
     cssExtension,

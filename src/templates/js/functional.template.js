@@ -4,7 +4,7 @@ import defaultOptions from '../../config.json'
 function generateFunctionalComponent(
   COMPONENT_NAME,
   componentType,
-  { cssExtension } = defaultOptions
+  { cssExtension = defaultOptions.defaultOptions } = defaultOptions
 ) {
   return `${generateImports(COMPONENT_NAME, componentType, { cssExtension })}
 

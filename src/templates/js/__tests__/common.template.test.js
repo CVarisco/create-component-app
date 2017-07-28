@@ -36,10 +36,11 @@ describe('Common Template', () => {
     ).toContain('shouldComponentUpdate(){}')
   })
 
-  it('should add styles import when cssExtension is passed', () => {
+  it('should add styles import with styleFileName and cssExtension', () => {
     const cssExtension = 'css'
-    expect(generateImports('Foo', 'stateless', { cssExtension })).toContain(
-      `import styles from './Foo.${cssExtension}`
-    )
+    const styleFileName = 'styles'
+    expect(
+      generateImports('Foo', 'stateless', { cssExtension, styleFileName })
+    ).toContain(`import styles from './${styleFileName}.${cssExtension}`)
   })
 })

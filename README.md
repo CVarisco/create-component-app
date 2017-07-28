@@ -62,7 +62,7 @@ $ create-component-app
 Create a file in your project folder named `.ccarc`:    
 
 ```javascript
-{   
+{
     "type": "class",
     "path": "./src/components",
     "jsExtension": "js",
@@ -71,7 +71,17 @@ Create a file in your project folder named `.ccarc`:
     "includeStories": false,
     "indexFile": false,
     "connected": false,
-    "componentMethods": ["componentDidMount", "shouldComponentUpdate", "onClick"]
+    "componentMethods": [
+        "componentDidMount",
+        "shouldComponentUpdate",
+        "onClick"
+    ],
+    "fileNames": {
+        "testFileMatch": "spec",
+        "testFileName": "myTest",
+        "componentFileName": "template",
+        "styleFileName": "style"
+    }
 }
 ```
 
@@ -107,7 +117,15 @@ Create a file in your project folder named `.ccarc`:
     "connected": false,
 
     // Only for "class" and "pure", insert method inside the component
-    "componentMethods": ["componentDidMount", "shouldComponentUpdate", "onClick"]
+    "componentMethods": ["componentDidMount", "shouldComponentUpdate", "onClick"],
+
+    // Choose the specific filename for your component's file.
+    "fileNames": {
+        "testFileMatch": "spec", // specify the match part of test file
+        "testFileName": "myTest", // specify the file name of your test file
+        "componentFileName": "template", // specify the component file name
+        "styleFileName": "style" // specify the style file name !!IMPORTANT: Include cssExtension.
+    }
 }
 ```
 

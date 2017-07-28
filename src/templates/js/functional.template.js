@@ -1,5 +1,5 @@
 import { generateImports } from './common.template'
-import defaultOptions from './config.json'
+import defaultOptions from '../../config.json'
 
 function generateFunctionalComponent(
   COMPONENT_NAME,

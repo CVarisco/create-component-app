@@ -1,4 +1,4 @@
-import defaultOptions from './config.json'
+import defaultOptions from '../../config.json'
 
 const COMPONENT_TYPES = {
   pure: 'PureComponent',

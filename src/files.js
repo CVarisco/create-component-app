@@ -6,6 +6,7 @@ import {
   generateTestTemplate,
   generateStorybookTemplate,
 } from './templates'
+import defaultOptions from './config.json'
 
 /**
  * Get the extension from the filename
@@ -95,7 +96,7 @@ async function generateFilesFromCustom({ name, path, templatesPath }) {
  */
 function getFileNames(fileNames, componentName) {
   const defaultFileNames = {
-    testFileName: 'tests',
+    testFileName: defaultOptions.testFileName,
     testFileMatch: componentName,
     componentFileName: componentName,
     styleFileName: componentName,

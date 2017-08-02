@@ -56,6 +56,11 @@ function generateFileName(newFilePath, newFileName, fileName) {
   if (fs.existsSync(newFilePath)) {
     return fileName
   }
+
+  if (fileName.includes('COMPONENT_NAME')) {
+    return fileName.replace(/COMPONENT_NAME/g, newFileName)
+  }
+
   return newFileName
 }
 

@@ -45,23 +45,23 @@ function readFile(path, fileName) {
  * If already exist, use the name
  * @param {string} newFilePath
  * @param {string} newFileName
- * @param {string} fileName
+ * @param {string} templateFileName
  */
-function generateFileName(newFilePath, newFileName, fileName) {
+function generateFileName(newFilePath, newFileName, templateFileName) {
   // Suppose that the index file don't be renamed
-  if (fileName.indexOf('index') !== -1) {
-    return fileName
+  if (templateFileName.indexOf('index') !== -1) {
+    return templateFileName
   }
 
   if (fs.existsSync(newFilePath)) {
-    return fileName
+    return templateFileName
   }
 
-  if (fileName.includes('COMPONENT_NAME')) {
-    return fileName.replace(/COMPONENT_NAME/g, newFileName)
+  if (templateFileName.includes('COMPONENT_NAME')) {
+    return templateFileName.replace(/COMPONENT_NAME/g, newFileName)
   }
 
-  return newFileName
+  return `${newFileName}.${getExtension(templateFileName)}`
 }
 
 /**
@@ -82,7 +82,7 @@ async function generateFilesFromCustom({ name, path, templatesPath }) {
       // Exist ?
       const newFileName = generateFileName(
         `${path}/${name}/`,
-        `${name}.${getExtension(templateFileName)}`,
+        name,
         templateFileName
       )
       // Write the new file with the new content

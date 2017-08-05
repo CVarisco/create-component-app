@@ -1,14 +1,21 @@
 #!/usr/bin/env node
+import chalk from 'chalk'
 
 import inquirer from 'inquirer'
 import yargs from 'yargs'
 import fs from 'fs-extra'
-import { generateFiles, generateFilesFromCustom } from './files'
+import { generateFiles, generateFilesFromTemplate, generateFilesFromCustom } from './files'
+import { generateQuestions, chooseTemplate, getTemplatesList } from './utils'
+
 import questions from './questions'
+
+global.logError = msg => console.error(chalk.bold.red(msg))
+global.logWarn = msg => console.warn(chalk.keyword('orange')(msg))
 
 // Dynamically import the config file if exist
 let config = null
 const argsConfigPath = yargs.argv.config
+const argsTemplate = yargs.argv.template
 const directoryConfig = `${process.cwd()}/.ccarc`
 
 // Check if exist the default directory of configuration
@@ -21,45 +28,49 @@ if (argsConfigPath) {
   config = require(`${process.cwd()}/${argsConfigPath}`)
 }
 
-/**
- * If the user want to use custom templates, return filtered questions
- * for only custom configuration
- */
-function generateQuestionsCustom() {
-  const mandatoryQuestions = [questions.name, questions.path]
-
-  return mandatoryQuestions.filter((question) => {
-    if (config[question.name]) {
-      return false
-    }
-    return true
-  })
+async function getTemplate(templatesList, template = null) {
+  if (!template) {
+    return chooseTemplate(Object.keys(templatesList))
+  }
+  if (template in templatesList) {
+    return template
+  }
+  throw Error(`The template '${template}' does't exists`)
 }
 
-/**
- * Generate questions filtered by the config file if exist
- */
-function generateQuestions() {
-  const questionKeys = Object.keys(questions)
+async function startTemplateGenarator() {
+  try {
+    const templatesDirPath = config ? config.templatesDirPath : null
+    const templates = getTemplatesList(templatesDirPath)
+    const template = await getTemplate(templates, argsTemplate)
+    const templatesPath = templates[template]
 
-  if (!config) {
-    return questionKeys.map(question => questions[question])
-  }
+    const requiredAnswers = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What is the name of the component ?',
+        default: 'ComponentName',
+      },
+      {
+        type: 'input',
+        name: 'path',
+        message: 'Where do you want create your component ?',
+        default: './src/components',
+      },
+    ])
 
-  // If type is custom, filter question mandatory to work
-  if (config.type === 'custom') {
-    return generateQuestionsCustom()
-  }
-
-  // filter questions from config object
-  const filteredQuestions = []
-  questionKeys.forEach((question) => {
-    if (!config.hasOwnProperty(question)) {
-      filteredQuestions.push(questions[question])
+    const results = {
+      ...config,
+      ...requiredAnswers,
+      templatesPath,
     }
-  })
 
-  return filteredQuestions
+    generateFilesFromTemplate(results)
+    console.log('Your component is created!')
+  } catch (error) {
+    logError(error.message)
+  }
 }
 
 /**
@@ -70,7 +81,21 @@ function generateQuestions() {
  */
 async function start() {
   try {
-    const filteredQuestions = generateQuestions()
+    if (argsTemplate) {
+      return await startTemplateGenarator()
+    }
+    const { template } = await inquirer.prompt([
+      {
+        type: 'confirm',
+        name: 'template',
+        message: 'Do you wanna choose a template',
+        default: false,
+      },
+    ])
+    if (template) {
+      return await startTemplateGenarator()
+    }
+    const filteredQuestions = generateQuestions(config, questions)
     const requirements = await inquirer.prompt(filteredQuestions)
 
     const results = {
@@ -79,15 +104,15 @@ async function start() {
     }
 
     if (results.type === 'custom') {
-      generateFilesFromCustom(results)
+      await generateFilesFromCustom(results)
     } else {
-      generateFiles(results)
+      await generateFiles(results)
     }
-
     console.log('Your component is created!')
   } catch (e) {
     console.log(e)
   }
+  return null
 }
 
 start()

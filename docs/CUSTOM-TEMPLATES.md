@@ -30,11 +30,9 @@ Inside this folder we will put all the files of the template.
 Create your templates file.
 The only thing that you need to set in the template is the name of the component.  
 
-**Filenames with *COMPONENT_NAME* will be replace with the givven component name.**
-
-
-*Note: the extension of the file will be used (so, use whatever you want)*  
-*Note: file with name "index" will not renamed*  
+- *Note: filenames with **COMPONENT_NAME** will be replaced with the component name.*
+- *Note: filename that includes "index" will not renamed*  
+- *Note: the extension of the file will be used (so, use whatever you want)*  
 
 Example of component custom template `template.js`:
 

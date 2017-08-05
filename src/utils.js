@@ -2,6 +2,21 @@ import inquirer from 'inquirer'
 import { getDirectories } from './files'
 
 /**
+ * If the user want to use custom templates, return filtered questions
+ * for only custom configuration
+ */
+function generateQuestionsCustom(config, questions) {
+  const mandatoryQuestions = [questions.name, questions.path]
+
+  return mandatoryQuestions.filter((question) => {
+    if (config[question.name]) {
+      return false
+    }
+    return true
+  })
+}
+
+/**
  * Generate questions filtered by the config file if exist
  *
  * @param {object} config
@@ -15,10 +30,15 @@ function generateQuestions(config = {}, questions = {}) {
     return questionKeys.map(question => questions[question])
   }
 
+  // If type is custom, filter question mandatory to work
+  if (config.type === 'custom') {
+    return generateQuestionsCustom(config, questions)
+  }
+
   // filter questions from config object
   const filteredQuestions = []
   questionKeys.forEach((question) => {
-    if (!config.hasOwnProperty(question)) {
+    if (!(question in config)) {
       filteredQuestions.push(questions[question])
     }
   })

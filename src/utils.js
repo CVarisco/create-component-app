@@ -1,4 +1,9 @@
 import inquirer from 'inquirer'
+import fs from 'fs-extra'
+import path from 'path'
+
+import questionsList from './questions'
+import Logger from './logger'
 import { getDirectories } from './files'
 
 /**
@@ -72,28 +77,38 @@ function getTemplatesList(customPath = null) {
 
     return { ...predefined, ...custom }
   } catch (error) {
-    logWarn('The custom templates path that you supply is unreachable')
-    logWarn('falling back to defaults templates')
+    Logger.warn('The custom templates path that you supply is unreachable')
+    Logger.warn('falling back to defaults templates')
     return predefined
   }
 }
 
-/**
- * Ask the user to choose a template from a list
- *
- * @param {array} templates
- * @returns the choosen template
- */
-async function chooseTemplate(templates) {
-  const { template } = await inquirer.prompt([
-    {
-      type: 'list',
-      name: 'template',
-      message: 'Choose a template',
-      choices: templates,
-    },
-  ])
-  return template
+// Dynamically import the config file if exist
+function getConfig(configPath = '.ccarc') {
+  const fullPath = path.join(process.cwd(), configPath)
+
+  let config
+  // Check if exist the default directory of configuration
+  if (fs.existsSync(fullPath)) {
+    try {
+      config = JSON.parse(fs.readFileSync(fullPath, 'utf8'))
+    } catch (error) {
+      Logger.error('Bad config file, Please check config file syntax')
+    }
+  }
+  return config
 }
 
-export { generateQuestions, chooseTemplate, getTemplatesList }
+async function getTemplate(templatesList, templateName = null) {
+  if (!templateName) {
+    const templatesArray = Object.entries(templatesList).map(([name, value]) => ({ name, value }))
+    const { template } = await inquirer.prompt(questionsList.template(templatesArray))
+    return template
+  }
+  if (templateName in templatesList) {
+    return templateName
+  }
+  throw Error(`The template '${templateName}' does't exists`)
+}
+
+export { generateQuestions, getTemplatesList, getConfig, getTemplate }

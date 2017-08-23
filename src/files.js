@@ -1,5 +1,6 @@
 import fs, { lstatSync, readdirSync } from 'fs-extra'
 import { join } from 'path'
+import Logger from './logger'
 import {
   generateComponentTemplate,
   generateStyleFile,
@@ -97,7 +98,7 @@ async function generateFilesFromTemplate({ name, path, templatesPath }) {
       fs.outputFile(`${path}/${name}/${newFileName}`, replaced)
     })
   } catch (e) {
-    console.log(e)
+    Logger.error(e)
   }
 }
 
@@ -187,5 +188,6 @@ function generateFiles(params) {
     )
   }
 }
+
 const generateFilesFromCustom = generateFilesFromTemplate
 export { generateFiles, generateFilesFromTemplate, generateFilesFromCustom, getDirectories }

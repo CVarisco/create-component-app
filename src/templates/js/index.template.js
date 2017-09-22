@@ -1,5 +1,5 @@
 function generateReduxConnect(COMPONENT_NAME) {
-  return `import ${COMPONENT_NAME} from './${COMPONENT_NAME}.js'
+  return `import ${COMPONENT_NAME} from './${COMPONENT_NAME}'
 import { connect } from 'react-redux'
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -22,7 +22,7 @@ function generateIndexFile(COMPONENT_NAME, connected) {
     return generateReduxConnect(COMPONENT_NAME)
   }
 
-  return `import ${COMPONENT_NAME} from './${COMPONENT_NAME}.js'
+  return `import ${COMPONENT_NAME} from './${COMPONENT_NAME}'
 
 export default ${COMPONENT_NAME}
 `

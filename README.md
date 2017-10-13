@@ -7,7 +7,7 @@
 **How much time do you spend copying and pasting the component folder to create a new one ?**<br />
 This is a tool to generate different types of React components from the terminal.<br />
 ### Available extension 
-<a href="https://github.com/CVarisco/vs-component-app"><img src="https://raw.githubusercontent.com/viatsko/awesome-vscode/master/logo.ico" width="30px"> </a><br />
+<a href="https://github.com/CVarisco/vs-component-app"><img src="http://ubuntuhandbook.org/wp-content/uploads/2017/05/vscode-icon245.png" width="50px"> </a><br />
 
 What you can do with this tool ?<br />
 

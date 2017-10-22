@@ -12,10 +12,12 @@
     "node": ">=6"
   },
   "main": "./dist/index.js",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "lint": "eslint src test",
-    "build": "babel src -d dist --copy-files",
+    "build": "./scripts/build.sh",
     "watch": "npm-watch",
     "try": "node ./dist/index.js",
     "test": "jest",
@@ -26,6 +28,7 @@
     "build": "src/**/*.js"
   },
   "dependencies": {
+    "chalk": "^2.1.0",
     "fs-extra": "3.0.1",
     "inquirer": "3.0.6",
     "yargs": "8.0.2"

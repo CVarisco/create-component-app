@@ -2,64 +2,35 @@
 
 import inquirer from 'inquirer'
 import yargs from 'yargs'
-import fs from 'fs-extra'
-import { generateFiles, generateFilesFromCustom } from './files'
+
+import Logger from './logger'
+import { generateFiles, generateFilesFromTemplate, generateFilesFromCustom } from './files'
+import { generateQuestions, getTemplatesList, getConfig, getTemplate } from './utils'
+
 import questions from './questions'
 
-// Dynamically import the config file if exist
-let config = null
-const argsConfigPath = yargs.argv.config
-const directoryConfig = `${process.cwd()}/.ccarc`
+const args = yargs.argv
+const config = getConfig(args.config)
 
-// Check if exist the default directory of configuration
-if (fs.existsSync(directoryConfig)) {
-  config = JSON.parse(fs.readFileSync(directoryConfig, 'utf8'))
-}
+async function startTemplateGenarator() {
+  try {
+    const templatesDirPath = config ? config.templatesDirPath : null
+    const templates = getTemplatesList(templatesDirPath)
+    const templatesPath = await getTemplate(templates, args.template)
 
-// Override the config object from the directory if exist --config
-if (argsConfigPath) {
-  config = require(`${process.cwd()}/${argsConfigPath}`)
-}
+    const requiredAnswers = await inquirer.prompt([questions.name, questions.path])
 
-/**
- * If the user want to use custom templates, return filtered questions
- * for only custom configuration
- */
-function generateQuestionsCustom() {
-  const mandatoryQuestions = [questions.name, questions.path]
-
-  return mandatoryQuestions.filter((question) => {
-    if (config[question.name]) {
-      return false
+    const results = {
+      ...config,
+      ...requiredAnswers,
+      templatesPath,
     }
-    return true
-  })
-}
 
-/**
- * Generate questions filtered by the config file if exist
- */
-function generateQuestions() {
-  const questionKeys = Object.keys(questions)
-
-  if (!config) {
-    return questionKeys.map(question => questions[question])
+    generateFilesFromTemplate(results)
+    Logger.log('Your component is created!')
+  } catch (error) {
+    Logger.error(error.message)
   }
-
-  // If type is custom, filter question mandatory to work
-  if (config.type === 'custom') {
-    return generateQuestionsCustom()
-  }
-
-  // filter questions from config object
-  const filteredQuestions = []
-  questionKeys.forEach((question) => {
-    if (!config.hasOwnProperty(question)) {
-      filteredQuestions.push(questions[question])
-    }
-  })
-
-  return filteredQuestions
 }
 
 /**
@@ -68,9 +39,23 @@ function generateQuestions() {
  * Get from the user the requirements to create the component folder and files
  * Generate files
  */
-async function start() {
+(async function start() {
   try {
-    const filteredQuestions = generateQuestions()
+    if (args.template) {
+      return await startTemplateGenarator()
+    }
+    const { template } = await inquirer.prompt([
+      {
+        type: 'confirm',
+        name: 'template',
+        message: 'Do you wanna choose a template',
+        default: false,
+      },
+    ])
+    if (template) {
+      return await startTemplateGenarator()
+    }
+    const filteredQuestions = generateQuestions(config, questions)
     const requirements = await inquirer.prompt(filteredQuestions)
 
     const results = {
@@ -79,17 +64,15 @@ async function start() {
     }
 
     if (results.type === 'custom') {
-      generateFilesFromCustom(results)
+      await generateFilesFromCustom(results)
     } else {
-      generateFiles(results)
+      await generateFiles(results)
     }
-
-    console.log('Your component is created!')
+    Logger.log('Your component is created!')
   } catch (e) {
-    console.log(e)
+    Logger.error(e)
   }
-}
-
-start()
+  return null
+}())
 
 export default { generateFiles, generateFilesFromCustom }

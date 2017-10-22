@@ -4,21 +4,33 @@ import inquirer from 'inquirer'
 import yargs from 'yargs'
 
 import Logger from './logger'
-import { generateFiles, generateFilesFromTemplate, generateFilesFromCustom } from './files'
-import { generateQuestions, getTemplatesList, getConfig, getTemplate } from './utils'
+import {
+  generateFiles,
+  generateFilesFromTemplate,
+  generateFilesFromCustom,
+} from './files'
+import {
+  generateQuestions,
+  getTemplatesList,
+  getConfig,
+  getTemplate,
+} from './utils'
 
-import questions from './questions'
+import { questions } from './questions'
 
 const args = yargs.argv
 const config = getConfig(args.config)
 
-async function startTemplateGenarator() {
+async function startTemplateGenerator() {
   try {
     const templatesDirPath = config ? config.templatesDirPath : null
     const templates = getTemplatesList(templatesDirPath)
     const templatesPath = await getTemplate(templates, args.template)
 
-    const requiredAnswers = await inquirer.prompt([questions.name, questions.path])
+    const requiredAnswers = await inquirer.prompt([
+      questions.name,
+      questions.path,
+    ])
 
     const results = {
       ...config,
@@ -42,8 +54,9 @@ async function startTemplateGenarator() {
 (async function start() {
   try {
     if (args.template) {
-      return await startTemplateGenarator()
+      return await startTemplateGenerator()
     }
+
     const { template } = await inquirer.prompt([
       {
         type: 'confirm',
@@ -52,12 +65,13 @@ async function startTemplateGenarator() {
         default: false,
       },
     ])
+
     if (template) {
-      return await startTemplateGenarator()
+      return await startTemplateGenerator()
     }
+
     const filteredQuestions = generateQuestions(config, questions)
     const requirements = await inquirer.prompt(filteredQuestions)
-
     const results = {
       ...config,
       ...requirements,
@@ -70,7 +84,7 @@ async function startTemplateGenarator() {
     }
     Logger.log('Your component is created!')
   } catch (e) {
-    Logger.error(e)
+    Logger.error(e.message)
   }
   return null
 }())

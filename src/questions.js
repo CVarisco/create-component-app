@@ -59,6 +59,9 @@ const questions = {
     message: 'Where do you want create your component ?',
     default: './src/components',
   },
+}
+
+const templateQuestions = {
   template: templates => ({
     type: 'list',
     name: 'template',
@@ -67,4 +70,4 @@ const questions = {
   }),
 }
 
-export default questions
+export { questions, templateQuestions }

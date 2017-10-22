@@ -2,13 +2,15 @@ import inquirer from 'inquirer'
 import fs from 'fs-extra'
 import path from 'path'
 
-import questionsList from './questions'
+import { templateQuestions } from './questions'
 import Logger from './logger'
 import { getDirectories } from './files'
 
 /**
  * If the user want to use custom templates, return filtered questions
  * for only custom configuration
+ * @param {object} config
+ * @param {object} questions
  */
 function generateQuestionsCustom(config, questions) {
   const mandatoryQuestions = [questions.name, questions.path]
@@ -52,27 +54,29 @@ function generateQuestions(config = {}, questions = {}) {
 }
 
 /**
- *
- *
+ * Reduce callback to reduce the list of directories
+ * @param {object} prev
+ * @param {array} dir
+ */
+function createListOfDirectories(prev, dir) {
+  return {
+    ...prev,
+    [dir.split('/').pop()]: dir,
+  }
+}
+
+/**
+ * Returns the list of templates available
  * @param {any} customPath
  */
 function getTemplatesList(customPath = null) {
   const predefined = getDirectories('./templates').reduce(
-    (prev, dir) => ({
-      ...prev,
-      [dir.split('/').pop()]: dir,
-    }),
+    createListOfDirectories,
     {}
   )
   try {
     const custom = customPath
-      ? getDirectories(customPath).reduce(
-          (prev, dir) => ({
-            ...prev,
-            [dir.split('/').pop()]: dir,
-          }),
-          {}
-        )
+      ? getDirectories(customPath).reduce(createListOfDirectories, {})
       : []
 
     return { ...predefined, ...custom }
@@ -99,10 +103,20 @@ function getConfig(configPath = '.ccarc') {
   return config
 }
 
+/**
+ * List templates on terminal or get the template (templateName config) from the folder of templates
+ * @param {array} templatesList to filter
+ * @param {string} templateName
+ */
 async function getTemplate(templatesList, templateName = null) {
   if (!templateName) {
-    const templatesArray = Object.entries(templatesList).map(([name, value]) => ({ name, value }))
-    const { template } = await inquirer.prompt(questionsList.template(templatesArray))
+    const templatesArray = Object.entries(templatesList).map(([
+      name,
+      value,
+    ]) => ({ name, value }))
+    const { template } = await inquirer.prompt(
+      templateQuestions.template(templatesArray)
+    )
     return template
   }
   if (templateName in templatesList) {

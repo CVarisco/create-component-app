@@ -12,7 +12,9 @@
     "node": ">=6"
   },
   "main": "./dist/index.js",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "lint": "eslint src test",
     "build": "babel src -d dist --copy-files",

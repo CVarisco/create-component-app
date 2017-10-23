@@ -1,26 +1,26 @@
-import fs from 'fs-extra'
+import fs, { lstatSync, readdirSync } from 'fs-extra'
+import { join } from 'path'
+import Logger from './logger'
 import {
   generateComponentTemplate,
   generateStyleFile,
   generateIndexFile,
   generateTestTemplate,
   generateStorybookTemplate,
-} from './templates'
+} from './defaultTemplates'
 import defaultOptions from './config.json'
 
 /**
- * Get the extension from the filename
- * @param {string} fileName
+ * fetch a list of dirs inside a dir
+ *
+ * @param {any} source path of a dir
+ * @returns {array} list of the dirs inside
  */
-function getExtension(fileName) {
-  const splittedFilename = fileName.split('.')
-  const length = splittedFilename.length
-
-  if (splittedFilename[1] === 'tests') {
-    return `${splittedFilename[length - 2]}.${splittedFilename[length - 1]}`
-  }
-
-  return splittedFilename[length - 1]
+function getDirectories(source) {
+  const isDirectory = sourcePath => lstatSync(sourcePath).isDirectory()
+  return readdirSync(source)
+    .map(name => join(source, name))
+    .filter(isDirectory)
 }
 
 /**
@@ -41,37 +41,27 @@ function readFile(path, fileName) {
 }
 
 /**
- * check if already exist in the folder the same file name
- * If already exist, use the name
+ * generate the file name
  * @param {string} newFilePath
  * @param {string} newFileName
  * @param {string} templateFileName
  */
 function generateFileName(newFilePath, newFileName, templateFileName) {
-  // Suppose that the index file don't be renamed
-  if (templateFileName.indexOf('index') !== -1) {
-    return templateFileName
-  }
-
-  if (fs.existsSync(newFilePath)) {
-    return templateFileName
-  }
-
   if (templateFileName.includes('COMPONENT_NAME')) {
     return templateFileName.replace(/COMPONENT_NAME/g, newFileName)
   }
-
-  return `${newFileName}.${getExtension(templateFileName)}`
+  console.log(templateFileName)
+  return templateFileName
 }
 
 /**
  * Generate component files from custom templates folder
- * Get every single file in the
+ * Get every single file in the folder
  * @param {string} the name of the component used to create folder and file
  * @param {string} where the component folder is created
  * @param {string} where the custom templates are
  */
-async function generateFilesFromCustom({ name, path, templatesPath }) {
+async function generateFilesFromTemplate({ name, path, templatesPath }) {
   try {
     const files = fs.readdirSync(templatesPath)
 
@@ -89,7 +79,7 @@ async function generateFilesFromCustom({ name, path, templatesPath }) {
       fs.outputFile(`${path}/${name}/${newFileName}`, replaced)
     })
   } catch (e) {
-    console.log(e)
+    Logger.error(e.message)
   }
 }
 
@@ -188,4 +178,10 @@ function generateFiles(params) {
   }
 }
 
-export { generateFiles, generateFilesFromCustom }
+const generateFilesFromCustom = generateFilesFromTemplate
+export {
+  generateFiles,
+  generateFilesFromTemplate,
+  generateFilesFromCustom,
+  getDirectories,
+}

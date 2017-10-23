@@ -61,4 +61,13 @@ const questions = {
   },
 }
 
-export default questions
+const templateQuestions = {
+  template: templates => ({
+    type: 'list',
+    name: 'template',
+    message: 'Choose a template',
+    choices: templates,
+  }),
+}
+
+export { questions, templateQuestions }

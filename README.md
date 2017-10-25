@@ -3,10 +3,12 @@
 </p>
 
 <p align="center">
+
 [![npm version](https://badge.fury.io/js/create-component-app.svg)](https://badge.fury.io/js/create-component-app)
 [![Code Climate](https://codeclimate.com/github/CVarisco/create-component-app/badges/gpa.svg)](https://codeclimate.com/github/CVarisco/create-component-app)
 [![npm](https://img.shields.io/npm/dw/create-component-app.svg)](https://www.npmjs.com/package/create-component-app)
 [![Build Status](https://travis-ci.org/CVarisco/create-component-app.svg?branch=master)](https://travis-ci.org/CVarisco/create-component-app)
+
 </p>
 
 **How much time do you spend copying and pasting the component folder to create a new one ?**<br />

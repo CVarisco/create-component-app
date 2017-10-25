@@ -1,9 +1,13 @@
-<img src="https://user-images.githubusercontent.com/7335613/31996536-29195b54-b989-11e7-84af-25744b154345.png" style="text-align:center;width:90%;"/>
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/7335613/31996536-29195b54-b989-11e7-84af-25744b154345.png" width="500" alt="create-component-app"/>
+</p>
 
+<p align="center">
 [![npm version](https://badge.fury.io/js/create-component-app.svg)](https://badge.fury.io/js/create-component-app)
 [![Code Climate](https://codeclimate.com/github/CVarisco/create-component-app/badges/gpa.svg)](https://codeclimate.com/github/CVarisco/create-component-app)
 [![npm](https://img.shields.io/npm/dw/create-component-app.svg)](https://www.npmjs.com/package/create-component-app)
 [![Build Status](https://travis-ci.org/CVarisco/create-component-app.svg?branch=master)](https://travis-ci.org/CVarisco/create-component-app)
+</p>
 
 **How much time do you spend copying and pasting the component folder to create a new one ?**<br />
 This is a tool to generate different types of React components from the terminal.<br />
@@ -149,7 +153,9 @@ Simple steps to create your own templates [docs/custom-templates](https://github
 ### You can use templates from the community
 Now, the first question that you receive is `Do you wanna choose a template?` if you answer yes, you can see the list of templates from the community.
 
-![cca-templates](https://user-images.githubusercontent.com/7335613/32014713-2c69bdea-b9bf-11e7-929c-6a79c5590cad.gif)
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/7335613/32015409-51e4b5e6-b9c1-11e7-9ccf-bb21eff2c66a.gif" alt="create-component-app-templates" width="1024" />
+</p>
 
 - (Optional) Add to the settings `templatesDirPath` - a custom path to the user custom templates folder.
 - (Optional) Add to the settings `templates` - a list of used templates (with a default) to filter the list

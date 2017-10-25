@@ -1,4 +1,4 @@
-<img src="https://user-images.githubusercontent.com/7335613/31996536-29195b54-b989-11e7-84af-25744b154345.png" style="text-align:center;"/>
+<img src="https://user-images.githubusercontent.com/7335613/31996536-29195b54-b989-11e7-84af-25744b154345.png" style="text-align:center;width:90%;"/>
 
 [![npm version](https://badge.fury.io/js/create-component-app.svg)](https://badge.fury.io/js/create-component-app)
 [![Code Climate](https://codeclimate.com/github/CVarisco/create-component-app/badges/gpa.svg)](https://codeclimate.com/github/CVarisco/create-component-app)

@@ -6,6 +6,7 @@ import { templateQuestions } from './questions'
 import Logger from './logger'
 import { getDirectories } from './files'
 
+const DEFAULT_PATH_TEMPLATES = `${path.dirname(require.main.filename)}/templates`
 /**
  * If the user want to use custom templates, return filtered questions
  * for only custom configuration
@@ -70,7 +71,7 @@ function createListOfDirectories(prev, dir) {
  * @param {any} customPath
  */
 function getTemplatesList(customPath = null) {
-  const predefined = getDirectories('./templates').reduce(
+  const predefined = getDirectories(DEFAULT_PATH_TEMPLATES).reduce(
     createListOfDirectories,
     {}
   )

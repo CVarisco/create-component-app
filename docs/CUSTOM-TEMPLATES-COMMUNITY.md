@@ -1,30 +1,17 @@
-# How to create custom template
+# Contribute with your templates
 
-With this library you can create your own templates and use them to generate your components in a second!
+With this library you can create your own templates and you can share it with the community! [#34](https://github.com/CVarisco/create-component-app/pull/34)
 
-### 1) Create your custom templates folder
+### 1) Fork the project
 
-Create a folder where you want.
-In this folder we will put the custom templates.
+You need to fork the project in order to add your templates
 
-### 2) Add the folder to the config
+### 2) Create a folder for your template
 
-Create a `config.json` (in the `.ccarc` folder or where you want) file where you write the options to generate your components from the custom templates.
-
-config.json:
-
-```json
-{
-    "templatesDirPath": "PATH/OF/CUSTOM/TEMPLATES/FOLDER"
-}
-```
-
-### 3) Create a folder for your template
-
-Create a folder inside the templates folder
+Create a folder inside the [templates folder](https://github.com/CVarisco/create-component-app/tree/master/templates)
 Inside this folder we will put all the files of the template.
 
-### 4) Create your templates
+### 3) Create your templates
 
 Create your templates file.
 The only thing that you need to set in the template is the name of the component.  
@@ -72,17 +59,6 @@ Example of custom style file `style.scss`:
 }
 ```
 
+### 5) Create the PR
 
-### 5) Launch the tool
-
-Launch the tool to generate components or pass a arg
-
-```bash
-create-component-app --template $TEMPALTE_NAME
-```
-
-
-
-Select the name and the destination path of your templates.
-
-**NOTE: With this configuration, you can add only the `path` parameter to set the default destination. The others parameters will be ignored**
+Thanks to your contribution 🌮!  

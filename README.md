@@ -1,4 +1,5 @@
-# create-component-app
+<img src="https://user-images.githubusercontent.com/7335613/31996536-29195b54-b989-11e7-84af-25744b154345.png" style="text-align:center;"/>
+
 [![npm version](https://badge.fury.io/js/create-component-app.svg)](https://badge.fury.io/js/create-component-app)
 [![Code Climate](https://codeclimate.com/github/CVarisco/create-component-app/badges/gpa.svg)](https://codeclimate.com/github/CVarisco/create-component-app)
 [![npm](https://img.shields.io/npm/dw/create-component-app.svg)](https://www.npmjs.com/package/create-component-app)
@@ -11,17 +12,17 @@ This is a tool to generate different types of React components from the terminal
 
 What you can do with this tool ?<br />
 
+- [You can use templates from the community 🎉](#you-can-use-templates-from-the-community)
 - [Create your components guided from terminal with a lot of choices](#create-your-components-guided-from-terminal-with-a-lot-of-choices)
 - [You can create a configuration file in your current project directory](#you-can-create-a-configuration-file-in-your-current-project-directory)
 - [You can also pass a configuration file from params](#you-can-also-pass-a-config-file)
 - [You can use your own custom templates](#you-can-use-your-own-custom-templates)
-
+- [Share your template to the community](https://github.com/CVarisco/create-component-app/blob/master/docs/CUSTOM-TEMPLATES-COMMUNITY.md)
 <br />
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/7335613/27760854-9ff86b54-5e51-11e7-8ad0-3289d9b3ebc3.gif" alt="create-component-app" width="1024" />
+  <img src="https://user-images.githubusercontent.com/7335613/32014712-2c0d8a8e-b9bf-11e7-97de-ea873edb6530.gif" alt="create-component-app" width="1024" />
 </p>
-
 
 ## Install
 
@@ -95,6 +96,9 @@ Create a file in your project folder named `.ccarc`:
     // Default type of component ["stateless", "class", "pure"]
     "type": "stateless",
 
+    // Default path to get the templates from the custom templates folder
+    "templatesDirPath": "./templates",
+
     // Default path to create component file and folder
     "path": "./src/components",
 
@@ -142,13 +146,26 @@ $ create-component-app --config path/to/your/config.json
 
 Simple steps to create your own templates [docs/custom-templates](https://github.com/CVarisco/create-component-app/blob/master/docs/CUSTOM-TEMPLATES.md)
 
+### You can use templates from the community
+Now, the first question that you receive is `Do you wanna choose a template?` if you answer yes, you can see the list of templates from the community.
+
+![cca-templates](https://user-images.githubusercontent.com/7335613/32014713-2c69bdea-b9bf-11e7-929c-6a79c5590cad.gif)
+
+- (Optional) Add to the settings `templatesDirPath` - a custom path to the user custom templates folder.
+- (Optional) Add to the settings `templates` - a list of used templates (with a default) to filter the list
+- (Optional) The user can choose between the available templates or use `create-component-app -t templateName`
+
 ## Contributing
+Now, the community can offer their templates! [How?](https://github.com/CVarisco/create-component-app/blob/master/docs/CUSTOM-TEMPLATES-COMMUNITY.md)
+
 Check the [issue list](https://github.com/CVarisco/create-component-app/issues) to contribute on some activities or to advice new features!
 The library is open to everybody, contribute improve your skills.   
 
 `create-component-app` is maintained under [the Semantic Versioning guidelines](http://semver.org/).
 
 Use `npm run watch` while coding.
+
+### [Contributors](https://github.com/CVarisco/create-component-app/graphs/contributors)
 
 ## License
 

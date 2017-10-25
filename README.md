@@ -27,7 +27,7 @@ What you can do with this tool ?<br />
 <br />
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/7335613/32014712-2c0d8a8e-b9bf-11e7-97de-ea873edb6530.gif" alt="create-component-app" width="1024" />
+  <img src="https://github.com/CVarisco/create-component-app/blob/master/docs/cca-no-templates.gif" alt="create-component-app" width="1024" />
 </p>
 
 ## Install

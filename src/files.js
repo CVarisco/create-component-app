@@ -1,5 +1,6 @@
 import fs, { lstatSync, readdirSync } from 'fs-extra'
 import { join } from 'path'
+import glob from 'glob'
 import Logger from './logger'
 import {
   generateComponentTemplate,
@@ -63,7 +64,7 @@ function generateFileName(newFilePath, newFileName, templateFileName) {
  */
 async function generateFilesFromTemplate({ name, path, templatesPath }) {
   try {
-    const files = fs.readdirSync(templatesPath)
+    const files = glob.sync('**/*', { cwd: templatesPath, nodir: true })
 
     files.map(async (templateFileName) => {
       // Get the template content

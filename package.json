@@ -30,6 +30,7 @@
   "dependencies": {
     "chalk": "^2.1.0",
     "fs-extra": "3.0.1",
+    "glob": "7.1.2",
     "inquirer": "3.0.6",
     "yargs": "8.0.2"
   },

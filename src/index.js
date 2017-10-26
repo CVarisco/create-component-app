@@ -51,10 +51,11 @@ async function getTemplateOption() {
 async function startTemplateGenerator(templatesPath) {
   try {
     const { path } = config
-    const requiredAnswers = await inquirer.prompt([
-      questions.name,
-      path ? undefined : questions.path,
-    ].filter(question => question))
+    const requiredAnswers = await inquirer.prompt(
+      [questions.name, path ? undefined : questions.path].filter(
+        question => question
+      )
+    )
 
     const results = {
       ...config,
@@ -91,7 +92,11 @@ async function startTemplateGenerator(templatesPath) {
 
     if (results.type === 'custom') {
       const { templateName } = config
-      if (!templateName) throw new Error('Please add a templateName to the config if using the custom type')
+      if (!templateName) {
+        throw new Error(
+          'Please add a templateName to the config if using the custom type'
+        )
+      }
       const templatesPath = await getTemplatesPath(templateName)
       await generateFilesFromCustom({ ...results, templatesPath })
     } else {

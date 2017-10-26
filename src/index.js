@@ -21,7 +21,7 @@ import { questions } from './questions'
 const args = yargs.argv
 const config = getConfig(args.config)
 
-async function getTemplateArg() {
+async function getTemplateOption() {
   const { templatesDirPath } = config
   const templates = getTemplatesList(templatesDirPath)
 
@@ -72,7 +72,7 @@ async function startTemplateGenerator(template) {
  */
 (async function start() {
   try {
-    const template = await getTemplateArg()
+    const template = await getTemplateOption()
     if (template) {
       return await startTemplateGenerator(template)
     }

@@ -21,11 +21,28 @@ import { questions } from './questions'
 const args = yargs.argv
 const config = getConfig(args.config)
 
-async function startTemplateGenerator() {
+async function getTemplateArg() {
+  const templateArg = args.t || args.template
+  if (templateArg) {
+    return templateArg
+  }
+
+  const { template } = await inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'template',
+      message: 'Do you wanna choose a template',
+      default: false,
+    },
+  ])
+  return template
+}
+
+async function startTemplateGenerator(template) {
   try {
     const templatesDirPath = config ? config.templatesDirPath : null
     const templates = getTemplatesList(templatesDirPath)
-    const templatesPath = await getTemplate(templates, args.template)
+    const templatesPath = await getTemplate(templates, template)
 
     const requiredAnswers = await inquirer.prompt([
       questions.name,
@@ -53,21 +70,9 @@ async function startTemplateGenerator() {
  */
 (async function start() {
   try {
-    if (args.template) {
-      return await startTemplateGenerator()
-    }
-
-    const { template } = await inquirer.prompt([
-      {
-        type: 'confirm',
-        name: 'template',
-        message: 'Do you wanna choose a template',
-        default: false,
-      },
-    ])
-
+    const template = await getTemplateArg()
     if (template) {
-      return await startTemplateGenerator()
+      return await startTemplateGenerator(template)
     }
 
     const filteredQuestions = generateQuestions(config, questions)

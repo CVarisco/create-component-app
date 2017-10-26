@@ -15,7 +15,8 @@ config.json:
 
 ```json
 {
-    "templatesDirPath": "PATH/OF/CUSTOM/TEMPLATES/FOLDER"
+    "templatesDirPath": "PATH/OF/CUSTOM/TEMPLATES/FOLDER",
+    "templateName": "NAME_OF_TEMPLATE_FOLDER"
 }
 ```
 
@@ -78,10 +79,10 @@ Example of custom style file `style.scss`:
 Launch the tool to generate components or pass a arg
 
 ```bash
-create-component-app --template $TEMPALTE_NAME
+create-component-app --template $TEMPLATE_NAME
 ```
 
-
+**$TEMPLATE_NAME should be the name of the subfolder
 
 Select the name and the destination path of your templates.
 

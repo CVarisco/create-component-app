@@ -21,13 +21,17 @@ import { questions } from './questions'
 const args = yargs.argv
 const config = getConfig(args.config)
 
-async function getTemplateOption() {
+async function getTemplatesPath(templateName = null) {
   const { templatesDirPath } = config
   const templates = getTemplatesList(templatesDirPath)
 
+  return getTemplate(templates, templateName)
+}
+
+async function getTemplateOption() {
   const templateArg = args.t || args.template
   if (templateArg) {
-    return getTemplate(templates, templateArg)
+    return getTemplatesPath(templateArg)
   }
 
   const { template } = await inquirer.prompt([
@@ -39,12 +43,12 @@ async function getTemplateOption() {
     },
   ])
   if (template) {
-    return getTemplate(templates)
+    return getTemplatesPath()
   }
   return null
 }
 
-async function startTemplateGenerator(template) {
+async function startTemplateGenerator(templatesPath) {
   try {
     const requiredAnswers = await inquirer.prompt([
       questions.name,
@@ -54,7 +58,7 @@ async function startTemplateGenerator(template) {
     const results = {
       ...config,
       ...requiredAnswers,
-      templatesPath: template,
+      templatesPath,
     }
 
     generateFilesFromTemplate(results)

@@ -121,7 +121,7 @@ async function getTemplate(templatesList, templateName = null) {
     return template
   }
   if (templateName in templatesList) {
-    return templateName
+    return templatesList[templateName]
   }
   throw Error(`The template '${templateName}' does't exists`)
 }

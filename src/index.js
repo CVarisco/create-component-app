@@ -89,7 +89,10 @@ async function startTemplateGenerator(templatesPath) {
     }
 
     if (results.type === 'custom') {
-      await generateFilesFromCustom(results)
+      const { templateName } = config
+      if (!templateName) throw new Error('Please add a templateName to the config if using the custom type')
+      const templatesPath = await getTemplatesPath(templateName)
+      await generateFilesFromCustom({ ...results, templatesPath })
     } else {
       await generateFiles(results)
     }

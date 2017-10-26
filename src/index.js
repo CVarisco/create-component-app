@@ -21,16 +21,41 @@ import { questions } from './questions'
 const args = yargs.argv
 const config = getConfig(args.config)
 
-async function startTemplateGenerator() {
-  try {
-    const templatesDirPath = config ? config.templatesDirPath : null
-    const templates = getTemplatesList(templatesDirPath)
-    const templatesPath = await getTemplate(templates, args.template)
+async function getTemplatesPath(templateName = null) {
+  const { templatesDirPath } = config
+  const templates = getTemplatesList(templatesDirPath)
 
-    const requiredAnswers = await inquirer.prompt([
-      questions.name,
-      questions.path,
-    ])
+  return getTemplate(templates, templateName)
+}
+
+async function getTemplateOption() {
+  const templateArg = args.t || args.template
+  if (templateArg) {
+    return getTemplatesPath(templateArg)
+  }
+
+  const { template } = await inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'template',
+      message: 'Do you wanna choose a template',
+      default: false,
+    },
+  ])
+  if (template) {
+    return getTemplatesPath()
+  }
+  return null
+}
+
+async function startTemplateGenerator(templatesPath) {
+  try {
+    const { path } = config
+    const requiredAnswers = await inquirer.prompt(
+      [questions.name, path ? undefined : questions.path].filter(
+        question => question
+      )
+    )
 
     const results = {
       ...config,
@@ -53,21 +78,9 @@ async function startTemplateGenerator() {
  */
 (async function start() {
   try {
-    if (args.template) {
-      return await startTemplateGenerator()
-    }
-
-    const { template } = await inquirer.prompt([
-      {
-        type: 'confirm',
-        name: 'template',
-        message: 'Do you wanna choose a template',
-        default: false,
-      },
-    ])
-
+    const template = await getTemplateOption()
     if (template) {
-      return await startTemplateGenerator()
+      return await startTemplateGenerator(template)
     }
 
     const filteredQuestions = generateQuestions(config, questions)
@@ -78,7 +91,14 @@ async function startTemplateGenerator() {
     }
 
     if (results.type === 'custom') {
-      await generateFilesFromCustom(results)
+      const { templateName } = config
+      if (!templateName) {
+        throw new Error(
+          'Please add a templateName to the config if using the custom type'
+        )
+      }
+      const templatesPath = await getTemplatesPath(templateName)
+      await generateFilesFromCustom({ ...results, templatesPath })
     } else {
       await generateFiles(results)
     }

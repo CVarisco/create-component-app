@@ -101,7 +101,7 @@ function getConfig(configPath = '.ccarc') {
       Logger.error('Bad config file, Please check config file syntax')
     }
   }
-  return config
+  return config || {}
 }
 
 /**
@@ -121,7 +121,7 @@ async function getTemplate(templatesList, templateName = null) {
     return template
   }
   if (templateName in templatesList) {
-    return templateName
+    return templatesList[templateName]
   }
   throw Error(`The template '${templateName}' does't exists`)
 }

@@ -101,7 +101,7 @@ function getConfig(configPath = '.ccarc') {
       Logger.error('Bad config file, Please check config file syntax')
     }
   }
-  return config
+  return config || {}
 }
 
 /**

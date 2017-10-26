@@ -23,14 +23,14 @@ const config = getConfig(args.config)
 
 async function startTemplateGenerator() {
   try {
-    const templatesDirPath = config ? config.templatesDirPath : null
+    const { path, templatesDirPath } = config
     const templates = getTemplatesList(templatesDirPath)
     const templatesPath = await getTemplate(templates, args.template)
 
     const requiredAnswers = await inquirer.prompt([
       questions.name,
-      questions.path,
-    ])
+      path ? undefined : questions.path,
+    ].filter(question => question))
 
     const results = {
       ...config,

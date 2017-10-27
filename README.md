@@ -69,30 +69,34 @@ $ create-component-app
 
 ### You can create a configuration file in your current project directory
 
-Create a file in your project folder named `.ccarc`:    
+Create-component-app uses [cosmiconfig](https://github.com/davidtheclark/cosmiconfig) for configuration file support.
+This means you can configure cca via:
 
-```javascript
+* A `.ccarc` file, written in YAML or JSON, with optional extensions: `.yaml/.yml/.json/.js`.
+* A `cca.config.js` file that exports an object.
+* A `"cca"` key in your `package.json` file.
+
+The configuration file will be resolved starting from the root of your project,
+and searching up the file tree until a config file is (or isn't) found.
+
+### Basic Configuration
+
+JSON:
+
+```json
+// .ccarc
 {
-    "type": "class",
-    "path": "./src/components",
-    "jsExtension": "js",
-    "cssExtension": "scss",
-    "includeTests": false,
-    "includeStories": false,
-    "indexFile": false,
-    "connected": false,
-    "componentMethods": [
-        "componentDidMount",
-        "shouldComponentUpdate",
-        "onClick"
-    ],
-    "fileNames": {
-        "testFileMatch": "spec",
-        "testFileName": "myTest",
-        "componentFileName": "template",
-        "styleFileName": "style"
-    }
+  "type": "class",
+  "path": "./src/components"
 }
+```
+
+YAML:
+
+```yaml
+# .ccarc
+type: class
+path: ./src/components
 ```
 
 ### You can also pass a config file
@@ -148,7 +152,7 @@ Create a file in your project folder named `.ccarc`:
 $ create-component-app --config path/to/your/config.json
 ```    
 
-**Passing a config file via the CLI overrides the configuration file in the working directory**
+**Passing a config file via the CLI overrides the configuration file loaded by [cosmiconfig](https://github.com/davidtheclark/cosmiconfig)**
 
 ### You can use your own custom templates
 

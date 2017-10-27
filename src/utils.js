@@ -1,6 +1,7 @@
 import inquirer from 'inquirer'
 import fs from 'fs-extra'
 import path from 'path'
+import cosmiconfig from 'cosmiconfig'
 
 import { templateQuestions } from './questions'
 import Logger from './logger'
@@ -89,17 +90,20 @@ function getTemplatesList(customPath = null) {
 }
 
 // Dynamically import the config file if exist
-function getConfig(configPath = '.ccarc') {
-  const fullPath = path.join(process.cwd(), configPath)
+function getConfig(configPath) {
+  const useCustomPath = !!configPath
+  const explorer = cosmiconfig('cca', { sync: true })
 
   let config
   // Check if exist the default directory of configuration
-  if (fs.existsSync(fullPath)) {
-    try {
-      config = JSON.parse(fs.readFileSync(fullPath, 'utf8'))
-    } catch (error) {
-      Logger.error('Bad config file, Please check config file syntax')
-    }
+  try {
+    const { config: _config } = explorer.load(
+      !useCustomPath && process.cwd(),
+      useCustomPath && path.join(process.cwd(), configPath)
+    )
+    config = _config
+  } catch (error) {
+    Logger.error('Bad config file, Please check config file syntax')
   }
   return config || {}
 }

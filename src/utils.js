@@ -88,23 +88,23 @@ function getTemplatesList(customPath = null) {
   }
 }
 
-// Dynamically import the config file if exist
+// Dynamically import a config file if exist
 function getConfig(configPath) {
   const useCustomPath = !!configPath
   const explorer = cosmiconfig('cca', { sync: true })
 
-  let config
-  // Check if exist the default directory of configuration
   try {
-    const { config: _config } = explorer.load(
+    // search from the root of the process if the user didnt specify a config file,
+    // or use the custom path if a file is passed.
+    const { config } = explorer.load(
       !useCustomPath && process.cwd(),
       useCustomPath && path.join(process.cwd(), configPath)
     )
-    config = _config
+    return config || {}
   } catch (error) {
     Logger.error('Bad config file, Please check config file syntax')
   }
-  return config || {}
+  return {}
 }
 
 /**

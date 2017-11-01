@@ -4,9 +4,11 @@ import defaultOptions from '../../config.json'
 function generateFunctionalComponent(
   COMPONENT_NAME,
   componentType,
-  { cssExtension = defaultOptions.defaultOptions } = defaultOptions
+  { cssExtension = defaultOptions.defaultOptions,
+    styleFileName,
+  } = defaultOptions
 ) {
-  return `${generateImports(COMPONENT_NAME, componentType, { cssExtension })}
+  return `${generateImports(COMPONENT_NAME, componentType, { cssExtension, styleFileName })}
 
 const ${COMPONENT_NAME} = ({}) => (
   <div className="${COMPONENT_NAME}"></div>

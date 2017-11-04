@@ -44,6 +44,7 @@
     "eslint-config-airbnb-base": "^11.0.1",
     "eslint-plugin-import": "^2.2.0",
     "jest": "^20.0.4",
+    "mock-fs": "^3.12.1",
     "npm-watch": "^0.1.7"
   }
 }

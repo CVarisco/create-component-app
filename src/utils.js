@@ -6,7 +6,31 @@ import { templateQuestions } from './questions'
 import Logger from './logger'
 import { getDirectories } from './files'
 
-const DEFAULT_PATH_TEMPLATES = `${path.dirname(require.main.filename)}/templates`
+function isIISNode(main) {
+  return /\\iisnode\\/.test(main.filename)
+}
+
+function handleIISNode(main) {
+  if (!main.children.length) {
+    return main.filename
+  }
+  return main.children[0].filename
+}
+
+function getModulePath(_require = require) {
+  const main = _require.main
+  if (main && isIISNode(main)) {
+    return handleIISNode(main)
+  }
+  return main ? main.filename : process.cwd()
+}
+
+function getDefaultPathTemplates() {
+  return `${path.dirname(getModulePath())}/templates`
+}
+
+const DEFAULT_PATH_TEMPLATES = getDefaultPathTemplates()
+
 /**
  * If the user want to use custom templates, return filtered questions
  * for only custom configuration

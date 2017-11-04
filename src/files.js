@@ -1,5 +1,5 @@
 import fs, { lstatSync, readdirSync } from 'fs-extra'
-import { join, basename } from 'path'
+import { join } from 'path'
 import glob from 'glob'
 import Logger from './logger'
 import {

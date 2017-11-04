@@ -1,5 +1,5 @@
 import fs, { lstatSync, readdirSync } from 'fs-extra'
-import { join } from 'path'
+import { join, basename } from 'path'
 import glob from 'glob'
 import Logger from './logger'
 import {
@@ -65,16 +65,16 @@ function generateFileName(newFilePath, newFileName, templateFileName) {
 async function generateFilesFromTemplate({ name, path, templatesPath }) {
   try {
     const files = glob.sync('**/*', { cwd: templatesPath, nodir: true })
-    const configFile = getConfig(null, templatesPath, templatesPath)
-    console.log(configFile)
+    const config = getConfig(null, templatesPath, templatesPath)
+    const outputPath = config.noMkdir ? `${path}` : `${path}/${name}`
     files.map(async (templateFileName) => {
       // Get the template content
       const content = await readFile(templatesPath, templateFileName)
       const replaced = content.replace(/COMPONENT_NAME/g, name)
       // Exist ?
-      const newFileName = generateFileName(`${path}/${name}/`, name, templateFileName)
+      const newFileName = generateFileName(`${outputPath}/`, name, templateFileName)
       // Write the new file with the new content
-      fs.outputFile(`${path}/${name}/${newFileName}`, replaced)
+      fs.outputFile(`${outputPath}/${newFileName}`, replaced)
     })
   } catch (e) {
     Logger.error(e.message)

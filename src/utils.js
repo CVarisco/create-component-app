@@ -100,8 +100,8 @@ function getConfig(configPath, searchPath = process.cwd(), stopDir = homedir()) 
     const configPathAbsolute = useCustomPath && path.join(process.cwd(), configPath)
     // search from the root of the process if the user didnt specify a config file,
     // or use the custom path if a file is passed.
-    const { config } = explorer.load(searchPathAbsolute, configPathAbsolute)
-    return config || {}
+    const { config, filepath } = explorer.load(searchPathAbsolute, configPathAbsolute)
+    return { ...(config || {}), filepath }
   } catch (error) {
     Logger.error('Bad config file, Please check config file syntax')
   }

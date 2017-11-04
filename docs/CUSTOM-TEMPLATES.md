@@ -34,6 +34,26 @@ The only thing that you need to set in the template is the name of the component
 - *Note: filename that includes "index" will not renamed*  
 - *Note: the extension of the file will be used (so, use whatever you want)*  
 
+#### You can create a configuration file in your template directory
+
+Create-component-app uses [cosmiconfig](https://github.com/davidtheclark/cosmiconfig) for configuration file support.
+This means you can configure cca via:
+
+* A `.ccarc` file, written in YAML or JSON, with optional extensions: `.yaml/.yml/.json/.js`.
+* A `cca.config.js` file that exports an object.
+
+The configuration file will be resolved starting from the root of your project,
+and searching up the file tree until a config file is (or isn't) found.
+
+Example of component custom template `.ccarc`:
+
+
+```js
+{
+  "noMkdir": true, // will spread the template files in the output directory
+}
+```
+
 Example of component custom template `template.js`:
 
 ```javascript

@@ -10,7 +10,7 @@ import {
   generateStorybookTemplate,
 } from './defaultTemplates'
 import defaultOptions from './config.json'
-
+import { getConfig } from './utils'
 /**
  * fetch a list of dirs inside a dir
  *
@@ -65,19 +65,16 @@ function generateFileName(newFilePath, newFileName, templateFileName) {
 async function generateFilesFromTemplate({ name, path, templatesPath }) {
   try {
     const files = glob.sync('**/*', { cwd: templatesPath, nodir: true })
-
+    const config = getConfig(null, templatesPath, templatesPath)
+    const outputPath = config.noMkdir ? `${path}` : `${path}/${name}`
     files.map(async (templateFileName) => {
       // Get the template content
       const content = await readFile(templatesPath, templateFileName)
       const replaced = content.replace(/COMPONENT_NAME/g, name)
       // Exist ?
-      const newFileName = generateFileName(
-        `${path}/${name}/`,
-        name,
-        templateFileName
-      )
+      const newFileName = generateFileName(`${outputPath}/`, name, templateFileName)
       // Write the new file with the new content
-      fs.outputFile(`${path}/${name}/${newFileName}`, replaced)
+      fs.outputFile(`${outputPath}/${newFileName}`, replaced)
     })
   } catch (e) {
     Logger.error(e.message)
@@ -132,25 +129,17 @@ function generateFiles(params) {
   } = params
   const destination = `${path}/${name}`
 
-  const {
-    testFileName,
-    testFileMatch,
-    componentFileName,
-    styleFileName,
-  } = getFileNames(fileNames, name)
+  const { testFileName, testFileMatch, componentFileName, styleFileName } = getFileNames(
+    fileNames,
+    name
+  )
 
   if (indexFile || connected) {
-    fs.outputFile(
-      `${destination}/index.js`,
-      generateIndexFile(componentFileName, connected)
-    )
+    fs.outputFile(`${destination}/index.js`, generateIndexFile(componentFileName, connected))
   }
 
   if (includeStories) {
-    fs.outputFile(
-      `${destination}/${name}.stories.${jsExtension}`,
-      generateStorybookTemplate(name)
-    )
+    fs.outputFile(`${destination}/${name}.stories.${jsExtension}`, generateStorybookTemplate(name))
   }
 
   if (includeTests) {
@@ -180,9 +169,4 @@ function generateFiles(params) {
 }
 
 const generateFilesFromCustom = generateFilesFromTemplate
-export {
-  generateFiles,
-  generateFilesFromTemplate,
-  generateFilesFromCustom,
-  getDirectories,
-}
+export { generateFiles, generateFilesFromTemplate, generateFilesFromCustom, getDirectories }

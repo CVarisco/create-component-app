@@ -1,12 +1,36 @@
 import inquirer from 'inquirer'
 import path from 'path'
 import cosmiconfig from 'cosmiconfig'
-
+import { homedir } from 'os'
 import { templateQuestions } from './questions'
 import Logger from './logger'
 import { getDirectories } from './files'
 
-const DEFAULT_PATH_TEMPLATES = `${path.dirname(require.main.filename)}/templates`
+function isIISNode(main) {
+  return /\\iisnode\\/.test(main.filename)
+}
+
+function handleIISNode(main) {
+  if (!main.children.length) {
+    return main.filename
+  }
+  return main.children[0].filename
+}
+
+function getModulePath(_require = require) {
+  const main = _require.main
+  if (main && isIISNode(main)) {
+    return handleIISNode(main)
+  }
+  return main ? main.filename : process.cwd()
+}
+
+function getDefaultPathTemplates() {
+  return `${path.dirname(getModulePath())}/templates`
+}
+
+const DEFAULT_PATH_TEMPLATES = getDefaultPathTemplates()
+
 /**
  * If the user want to use custom templates, return filtered questions
  * for only custom configuration
@@ -71,14 +95,9 @@ function createListOfDirectories(prev, dir) {
  * @param {any} customPath
  */
 function getTemplatesList(customPath = null) {
-  const predefined = getDirectories(DEFAULT_PATH_TEMPLATES).reduce(
-    createListOfDirectories,
-    {}
-  )
+  const predefined = getDirectories(DEFAULT_PATH_TEMPLATES).reduce(createListOfDirectories, {})
   try {
-    const custom = customPath
-      ? getDirectories(customPath).reduce(createListOfDirectories, {})
-      : []
+    const custom = customPath ? getDirectories(customPath).reduce(createListOfDirectories, {}) : []
 
     return { ...predefined, ...custom }
   } catch (error) {
@@ -88,19 +107,25 @@ function getTemplatesList(customPath = null) {
   }
 }
 
-// Dynamically import a config file if exist
-function getConfig(configPath) {
+/**
+ * Dynamically import a config file if exist
+ *
+ * @param {any} configPath
+ * @param {any} [searchPath=process.cwd()]
+ * @param {any} [stopDir=homedir()]
+ * @returns {Object} config
+ */
+function getConfig(configPath, searchPath = process.cwd(), stopDir = homedir()) {
   const useCustomPath = !!configPath
-  const explorer = cosmiconfig('cca', { sync: true })
+  const explorer = cosmiconfig('cca', { sync: true, stopDir })
 
   try {
+    const searchPathAbsolute = !useCustomPath && searchPath
+    const configPathAbsolute = useCustomPath && path.join(process.cwd(), configPath)
     // search from the root of the process if the user didnt specify a config file,
     // or use the custom path if a file is passed.
-    const { config } = explorer.load(
-      !useCustomPath && process.cwd(),
-      useCustomPath && path.join(process.cwd(), configPath)
-    )
-    return config || {}
+    const { config, filepath } = explorer.load(searchPathAbsolute, configPathAbsolute)
+    return { ...(config || {}), filepath }
   } catch (error) {
     Logger.error('Bad config file, Please check config file syntax')
   }
@@ -114,13 +139,8 @@ function getConfig(configPath) {
  */
 async function getTemplate(templatesList, templateName = null) {
   if (!templateName) {
-    const templatesArray = Object.entries(templatesList).map(([
-      name,
-      value,
-    ]) => ({ name, value }))
-    const { template } = await inquirer.prompt(
-      templateQuestions.template(templatesArray)
-    )
+    const templatesArray = Object.entries(templatesList).map(([name, value]) => ({ name, value }))
+    const { template } = await inquirer.prompt(templateQuestions.template(templatesArray))
     return template
   }
   if (templateName in templatesList) {

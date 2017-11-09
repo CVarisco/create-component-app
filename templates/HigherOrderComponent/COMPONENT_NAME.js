@@ -5,7 +5,7 @@ function getDisplayName(WrappedComponent) {
 }
 
 function COMPONENT_NAME(WrappedComponent) {
-  class Wrapper extends React.Component {
+  class Wrapper extends Component {
     constructor(props) {
       super(props)
     }

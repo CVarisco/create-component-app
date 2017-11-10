@@ -72,7 +72,7 @@ $ create-component-app
 Create-component-app uses [cosmiconfig](https://github.com/davidtheclark/cosmiconfig) for configuration file support.
 This means you can configure cca via:
 
-* A `.ccarc` file, written in YAML or JSON, with optional extensions: `.yaml/.yml/.json/.js`.
+* A `.ccarc` file, written in YAML or JSON, with optional extensions: `.yaml/.yml/.json`.
 * A `cca.config.js` file that exports an object.
 * A `"cca"` key in your `package.json` file.
 

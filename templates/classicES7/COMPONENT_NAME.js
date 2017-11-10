@@ -6,7 +6,11 @@ class COMPONENT_NAME extends Component {
   static propTypes = {}
 
   render() {
-    return <div className="COMPONENT_NAME" />
+    return (
+      <div className="COMPONENT_NAME">
+        COMPONENT_NAME
+      </div>
+    )
   }
 }
 

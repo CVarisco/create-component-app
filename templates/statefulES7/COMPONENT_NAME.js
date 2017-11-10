@@ -7,7 +7,11 @@ class COMPONENT_NAME extends Component {
   state = {}
 
   render() {
-    return <div className="COMPONENT_NAME" />
+    return (
+      <div className="COMPONENT_NAME">
+        COMPONENT_NAME
+      </div>
+    )
   }
 }
 

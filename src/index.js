@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+import 'babel-polyfill'
 import inquirer from 'inquirer'
 import yargs from 'yargs'
 

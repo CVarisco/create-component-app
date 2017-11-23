@@ -1,6 +1,6 @@
 {
   "name": "create-component-app",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Tool to generate different types of React components from the terminal.",
   "bin": {
     "create-component-app": "./dist/index.js"
@@ -28,6 +28,7 @@
     "build": "src/**/*.js"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "chalk": "^2.1.0",
     "cosmiconfig": "^3.1.0",
     "fs-extra": "3.0.1",

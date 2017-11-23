@@ -1,20 +1,18 @@
+/* eslint-disable no-console */
 import chalk from 'chalk'
 
 const Logger = {
-  log(msg) {
-    /* eslint-disable no-console */
-    return console.log(chalk.green(JSON.stringify(msg)))
-    /* eslint-enable no-console */
+  log(...msg) {
+    return console.log(chalk.green('[Info]'), ...msg)
   },
-  error(msg) {
-    /* eslint-disable no-console */
-    return console.error(chalk.bold.red(JSON.stringify(msg)))
-    /* eslint-enable no-console */
+  error(...msg) {
+    return console.error(chalk.bold.red('[Error]'), ...msg)
   },
-  warn(msg) {
-    /* eslint-disable no-console */
-    return console.warn(chalk.keyword('orange')(JSON.stringify(msg)))
-    /* eslint-enable no-console */
+  warn(...msg) {
+    return console.warn(chalk.keyword('orange')('[Warn]'), ...msg)
+  },
+  debug(...msg) {
+    return console.warn(chalk.blue('[Debug]'), ...msg)
   },
 }
 

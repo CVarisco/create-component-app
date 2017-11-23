@@ -28,9 +28,9 @@
     "build": "src/**/*.js"
   },
   "dependencies": {
-    "babel-polyfill": "^6.26.0",
-    "chalk": "^2.1.0",
-    "cosmiconfig": "^3.1.0",
+    "babel-polyfill": "6.26.0",
+    "chalk": "2.1.0",
+    "cosmiconfig": "3.1.0",
     "fs-extra": "3.0.1",
     "glob": "7.1.2",
     "inquirer": "3.0.6",

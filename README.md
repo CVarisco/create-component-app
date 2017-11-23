@@ -81,71 +81,32 @@ and searching up the file tree until a config file is (or isn't) found.
 
 ### Basic Configuration
 
-JSON:
+An example configuration file can be found here: [.ccarc.example](.ccarc.example), you can use this
+file by copying it to the root of your project.
 
-```json
-// .ccarc
-{
-  "type": "class",
-  "path": "./src/components"
-}
-```
+Currently supported options are:
 
-YAML:
-
-```yaml
-# .ccarc
-type: class
-path: ./src/components
-```
+  Option | Description
+  --- | ---
+  `type` | Default type of the component `["stateless", "class", "pure"]`
+  `templatesDirPath` | Default path to get the templates from the custom templates folder
+  `path` | Default path to create component file and folder
+  `jsExtension` | Default extension for your javascript file `["js", "jsx"]`
+  `cssExtension` | Default extension for your css file `["css", "scss", "sass", "less", false]`. Set to false if you don't want a style file
+  `includeTests` | Default flag to include a test file in the folder `[true, false]`
+  `includeStories` | Default flag to include a storybook file in the folder `[true, false]`
+  `indexFile` |  Default flag to create an index file in the folder `[false, true]`
+  `connected` | Default flag to integrate connect redux in the index file `[false, true]`
+  `componentMethods` | Only for "class" and "pure", insert method inside the component (i.e. `["componentDidMount", "shouldComponentUpdate", "onClick"]`)
+  `fileNames` | Choose the specific filename for your component's file.
+  `fileNames.testFileMatch` | specify the match part of test file
+  `fileNames.testFileName` | specify the file name of your test file
+  `fileNames.componentFileName` |  specify the component file name
+  `fileNames.styleFileName` | specify the style file name !!IMPORTANT: Include cssExtension.
 
 ### You can also pass a config file
 
 1) Create a JSON file `config.json`:  
-
-```javascript
-{   
-    // Default type of component ["stateless", "class", "pure"]
-    "type": "stateless",
-
-    // Default path to get the templates from the custom templates folder
-    "templatesDirPath": "./templates",
-
-    // Default path to create component file and folder
-    "path": "./src/components",
-
-    // Default extension for your javascript file ["js", "jsx"]
-    "jsExtension": "js",
-
-    // Default extension for your css file ["css", "scss", "sass", "less", false]
-    // Set to false if you don't want a style file
-    "cssExtension": "css",
-
-    // Default flag to include a test file in the folder [true, false]
-    "includeTests": true,
-
-    // Default flag to include a storybook file in the folder [true, false]
-    "includeStories": true,
-
-    // Default flag to create an index file in the folder [false, true]
-    "indexFile": false,
-
-    // Default flag to integrate connect redux in the index file [false, true]
-    "connected": false,
-
-    // Only for "class" and "pure", insert method inside the component
-    "componentMethods": ["componentDidMount", "shouldComponentUpdate", "onClick"],
-
-    // Choose the specific filename for your component's file.
-    "fileNames": {
-        "testFileMatch": "spec", // specify the match part of test file
-        "testFileName": "myTest", // specify the file name of your test file
-        "componentFileName": "template", // specify the component file name
-        "styleFileName": "style" // specify the style file name !!IMPORTANT: Include cssExtension.
-    }
-}
-```
-
 2) and pass the path to config param
 
 ```sh

@@ -1,0 +1,17 @@
+{   
+  "templatesDirPath": "./templates",
+  "path": "./src/components",
+  "jsExtension": "js",
+  "cssExtension": "css",
+  "includeTests": true,
+  "includeStories": true,
+  "indexFile": false,
+  "connected": false,
+  "componentMethods": [],
+  "fileNames": {
+    "testFileMatch": "spec",
+    "testFileName": "myTest",
+    "componentFileName": "template",
+    "styleFileName": "style"
+  }
+}

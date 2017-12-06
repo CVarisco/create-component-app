@@ -19,7 +19,10 @@ import {
 import { questions } from './questions'
 
 const args = yargs.argv
-const config = getConfig(args.config)
+const config = {
+  ...getConfig(args.config),
+  ...args,
+}
 
 async function getTemplatesPath(templateName = null) {
   const { templatesDirPath } = config

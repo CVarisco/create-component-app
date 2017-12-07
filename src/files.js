@@ -51,7 +51,6 @@ function generateFileName(newFilePath, newFileName, templateFileName) {
   if (templateFileName.includes('COMPONENT_NAME')) {
     return templateFileName.replace(/COMPONENT_NAME/g, newFileName)
   }
-  console.log(templateFileName)
   return templateFileName
 }
 

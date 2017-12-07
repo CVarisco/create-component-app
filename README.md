@@ -115,6 +115,14 @@ $ create-component-app --config path/to/your/config.json
 
 **Passing a config file via the CLI overrides the configuration file loaded by [cosmiconfig](https://github.com/davidtheclark/cosmiconfig)**
 
+### You can pass params from the command line
+
+```sh
+$ create-component-app --path path/destionation
+```    
+
+**Passing a param via the CLI overrides the configuration file loaded by [cosmiconfig](https://github.com/davidtheclark/cosmiconfig)**
+
 ### You can use your own custom templates
 
 Simple steps to create your own templates [docs/custom-templates](https://github.com/CVarisco/create-component-app/blob/master/docs/CUSTOM-TEMPLATES.md)

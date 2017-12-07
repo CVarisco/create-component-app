@@ -43,11 +43,10 @@ function readFile(path, fileName) {
 
 /**
  * generate the file name
- * @param {string} newFilePath
  * @param {string} newFileName
  * @param {string} templateFileName
  */
-function generateFileName(newFilePath, newFileName, templateFileName) {
+function generateFileName(newFileName, templateFileName) {
   if (templateFileName.includes('COMPONENT_NAME')) {
     return templateFileName.replace(/COMPONENT_NAME/g, newFileName)
   }
@@ -71,7 +70,7 @@ async function generateFilesFromTemplate({ name, path, templatesPath }) {
       const content = await readFile(templatesPath, templateFileName)
       const replaced = content.replace(/COMPONENT_NAME/g, name)
       // Exist ?
-      const newFileName = generateFileName(`${outputPath}/`, name, templateFileName)
+      const newFileName = generateFileName(name, templateFileName)
       // Write the new file with the new content
       fs.outputFile(`${outputPath}/${newFileName}`, replaced)
     })
@@ -102,6 +101,7 @@ function getFileNames(fileNames, componentName) {
  *
  * @param {object} params object with:
  * @param {string} type: the type of component template
+ * @param {object} fileNames: object that contains the filenames to replace
  * @param {string} name: the name of the component used to create folder and file
  * @param {string} path: where the component folder is created
  * @param {string} cssExtension: the extension of the css file
@@ -128,17 +128,25 @@ function generateFiles(params) {
   } = params
   const destination = `${path}/${name}`
 
-  const { testFileName, testFileMatch, componentFileName, styleFileName } = getFileNames(
-    fileNames,
-    name
-  )
+  const {
+    testFileName,
+    testFileMatch,
+    componentFileName,
+    styleFileName,
+  } = getFileNames(fileNames, name)
 
   if (indexFile || connected) {
-    fs.outputFile(`${destination}/index.js`, generateIndexFile(componentFileName, connected))
+    fs.outputFile(
+      `${destination}/index.js`,
+      generateIndexFile(componentFileName, connected)
+    )
   }
 
   if (includeStories) {
-    fs.outputFile(`${destination}/${name}.stories.${jsExtension}`, generateStorybookTemplate(name))
+    fs.outputFile(
+      `${destination}/${name}.stories.${jsExtension}`,
+      generateStorybookTemplate(name)
+    )
   }
 
   if (includeTests) {
@@ -168,4 +176,9 @@ function generateFiles(params) {
 }
 
 const generateFilesFromCustom = generateFilesFromTemplate
-export { generateFiles, generateFilesFromTemplate, generateFilesFromCustom, getDirectories }
+export {
+  generateFiles,
+  generateFilesFromTemplate,
+  generateFilesFromCustom,
+  getDirectories,
+}

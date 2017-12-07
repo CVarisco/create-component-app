@@ -176,6 +176,7 @@ function generateFiles(params) {
 }
 
 const generateFilesFromCustom = generateFilesFromTemplate
+
 export {
   generateFiles,
   generateFilesFromTemplate,

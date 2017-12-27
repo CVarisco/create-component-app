@@ -9,7 +9,6 @@
   "connected": false,
   "componentMethods": [],
   "fileNames": {
-    "testFileMatch": "spec",
     "testFileName": "myTest",
     "componentFileName": "template",
     "styleFileName": "style"

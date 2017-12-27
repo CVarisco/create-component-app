@@ -98,8 +98,7 @@ Currently supported options are:
   `indexFile` |  Default flag to create an index file in the folder `[false, true]`
   `connected` | Default flag to integrate connect redux in the index file `[false, true]`
   `componentMethods` | Only for "class" and "pure", insert method inside the component (i.e. `["componentDidMount", "shouldComponentUpdate", "onClick"]`)
-  `fileNames` | Choose the specific filename for your component's file.
-  `fileNames.testFileMatch` | specify the match part of test file
+  `fileNames` | Choose the specific filename for your component's file. (COMPONENT_NAME will be replaced)
   `fileNames.testFileName` | specify the file name of your test file
   `fileNames.componentFileName` |  specify the component file name
   `fileNames.styleFileName` | specify the style file name !!IMPORTANT: Include cssExtension.

@@ -87,13 +87,21 @@ async function generateFilesFromTemplate({ name, path, templatesPath }) {
  */
 function getFileNames(fileNames, componentName) {
   const defaultFileNames = {
-    testFileName: defaultOptions.testFileName,
-    testFileMatch: componentName,
+    testFileName: `${defaultOptions.testFileName}.${componentName}`,
     componentFileName: componentName,
     styleFileName: componentName,
   }
 
-  return { ...defaultFileNames, ...fileNames }
+  const formattedFileNames = Object.keys(fileNames).reduce(
+    (acc, curr) => {
+      acc[curr] = fileNames[curr].replace(/COMPONENT_NAME/g, componentName)
+
+      return acc
+    },
+    { ...defaultFileNames }
+  )
+
+  return formattedFileNames
 }
 
 /**
@@ -128,32 +136,18 @@ function generateFiles(params) {
   } = params
   const destination = `${path}/${name}`
 
-  const {
-    testFileName,
-    testFileMatch,
-    componentFileName,
-    styleFileName,
-  } = getFileNames(fileNames, name)
+  const { testFileName, componentFileName, styleFileName } = getFileNames(fileNames, name)
 
   if (indexFile || connected) {
-    fs.outputFile(
-      `${destination}/index.js`,
-      generateIndexFile(componentFileName, connected)
-    )
+    fs.outputFile(`${destination}/index.js`, generateIndexFile(componentFileName, connected))
   }
 
   if (includeStories) {
-    fs.outputFile(
-      `${destination}/${name}.stories.${jsExtension}`,
-      generateStorybookTemplate(name)
-    )
+    fs.outputFile(`${destination}/${name}.stories.${jsExtension}`, generateStorybookTemplate(name))
   }
 
   if (includeTests) {
-    fs.outputFile(
-      `${destination}/${testFileName}.${testFileMatch}.${jsExtension}`,
-      generateTestTemplate(name)
-    )
+    fs.outputFile(`${destination}/${testFileName}.${jsExtension}`, generateTestTemplate(name))
   }
 
   // Create js file
@@ -177,9 +171,4 @@ function generateFiles(params) {
 
 const generateFilesFromCustom = generateFilesFromTemplate
 
-export {
-  generateFiles,
-  generateFilesFromTemplate,
-  generateFilesFromCustom,
-  getDirectories,
-}
+export { generateFiles, generateFilesFromTemplate, generateFilesFromCustom, getDirectories }

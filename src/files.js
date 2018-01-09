@@ -85,7 +85,7 @@ async function generateFilesFromTemplate({ name, path, templatesPath }) {
  * @param {string} componentName
  * @return {object} with the correct filenames
  */
-function getFileNames(fileNames, componentName) {
+function getFileNames(fileNames = [], componentName) {
   const defaultFileNames = {
     testFileName: `${defaultOptions.testFileName}.${componentName}`,
     componentFileName: componentName,

@@ -84,9 +84,9 @@ function generateQuestions(config = {}, questions = {}) {
  * @param {array} dir
  */
 function createListOfDirectories(prev, dir) {
-  return {
+return {
     ...prev,
-    [dir.split('/').pop()]: dir,
+    [dir.split(path.sep).pop()]: dir,
   }
 }
 

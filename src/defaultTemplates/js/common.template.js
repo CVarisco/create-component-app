@@ -6,18 +6,26 @@ const COMPONENT_TYPES = {
 }
 
 function generateReactImport(componentType) {
-  return `import React${componentType !== 'stateless' ? `, { ${COMPONENT_TYPES[componentType]} }` : ''} from 'react'`
+  return `import React${
+    componentType !== 'stateless' ? `, { ${COMPONENT_TYPES[componentType]} }` : ''
+  } from 'react'`
 }
 
+/**
+ * Create the concatenation of methods string that will be injected into class and pure components
+ * @param {Array} componentMethods
+ * @return {String} methods
+ */
 function generateComponentMethods(componentMethods) {
   if (componentMethods.length === 0) {
-    return null
+    return ''
   }
-  let methods = ''
-  componentMethods.forEach((method) => {
-    methods += `\n\xa0\xa0\xa0\xa0${method}(){}\n`
-  })
-  return methods
+
+  return componentMethods.reduce((acc, method) => {
+    const methods = `${acc}\n\xa0\xa0\xa0\xa0${method}(){}\n`
+
+    return methods
+  }, '')
 }
 
 function generateImports(

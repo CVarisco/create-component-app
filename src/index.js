@@ -4,11 +4,7 @@ import inquirer from 'inquirer'
 import yargs from 'yargs'
 
 import Logger from './logger'
-import {
-  generateFiles,
-  generateFilesFromTemplate,
-  generateFilesFromCustom,
-} from './files'
+import { generateFiles, generateFilesFromCustomTemplate } from './files'
 import {
   generateQuestions,
   getTemplatesList,
@@ -24,6 +20,11 @@ const config = {
   ...args,
 }
 
+/**
+ * Search and return the template path from the templates lists
+ * @param {string} templateName
+ * @return {string} template path
+ */
 async function getTemplatesPath(templateName = null) {
   const { templatesDirPath } = config
   const templates = getTemplatesList(templatesDirPath)
@@ -66,7 +67,7 @@ async function startTemplateGenerator(templatesPath) {
       templatesPath,
     }
 
-    generateFilesFromTemplate(results)
+    generateFilesFromCustomTemplate(results)
     Logger.log('Your component is created!')
   } catch (error) {
     Logger.error(error.message)
@@ -101,7 +102,7 @@ async function startTemplateGenerator(templatesPath) {
         )
       }
       const templatesPath = await getTemplatesPath(templateName)
-      await generateFilesFromCustom({ ...results, templatesPath })
+      await generateFilesFromCustomTemplate({ ...results, templatesPath })
     } else {
       await generateFiles(results)
     }

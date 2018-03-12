@@ -47,7 +47,7 @@ function readFile(path, fileName) {
  * @param {string} templateFileName
  */
 function generateFileName(newFileName, templateFileName) {
-  let generatedFileName = templateFileName;
+  let generatedFileName = templateFileName
   if (templateFileName.includes('COMPONENT_NAME')) {
     generatedFileName = templateFileName.replace(/COMPONENT_NAME/g, newFileName)
   }

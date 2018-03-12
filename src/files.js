@@ -50,6 +50,15 @@ function generateFileName(newFileName, templateFileName) {
   if (templateFileName.includes('COMPONENT_NAME')) {
     return templateFileName.replace(/COMPONENT_NAME/g, newFileName)
   }
+  if (templateFileName.includes('component_name')) {
+    return templateFileName.replace(/component_name/g, newFileName.toLowerCase())
+  }
+  if (templateFileName.includes('COMPONENT_CAP_NAME')) {
+    return templateFileName.replace(/COMPONENT_CAP_NAME/g, newFileName.toUpperCase())
+  }
+  if (templateFileName.includes('cOMPONENT_NAME')) {
+    return templateFileName.replace(/cOMPONENT_NAME/g, newFileName[0].toLowerCase() + newFileName.substr(1))
+  }
   return templateFileName
 }
 
@@ -69,6 +78,9 @@ async function generateFilesFromTemplate({ name, path, templatesPath }) {
       // Get the template content
       const content = await readFile(templatesPath, templateFileName)
       const replaced = content.replace(/COMPONENT_NAME/g, name)
+                         .replace(/component_name/g, name.toLowerCase())
+                         .replace(/COMPONENT_CAP_NAME/g, name.toUpperCase())
+                         .replace(/cOMPONENT_NAME/g, name[0].toLowerCase() + name.substr(1))
       // Exist ?
       const newFileName = generateFileName(name, templateFileName)
       // Write the new file with the new content
@@ -95,7 +107,9 @@ function getFileNames(fileNames = [], componentName) {
   const formattedFileNames = Object.keys(fileNames).reduce(
     (acc, curr) => {
       acc[curr] = fileNames[curr].replace(/COMPONENT_NAME/g, componentName)
-
+                    .replace(/component_name/g, componentName.toLowerCase())
+                    .replace(/COMPONENT_CAP_NAME/g, componentName.toUpperCase())
+                    .replace(/cOMPONENT_NAME/g, componentName[0].toUpperCase() + componentName.substr(1))
       return acc
     },
     { ...defaultFileNames }

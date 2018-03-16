@@ -47,20 +47,23 @@ function readFile(path, fileName) {
  * @param {string} templateFileName
  */
 function generateFileName(newFileName, templateFileName) {
-  let generatedFileName = templateFileName
-  if (templateFileName.includes('COMPONENT_NAME')) {
-    generatedFileName = templateFileName.replace(/COMPONENT_NAME/g, newFileName)
+  const replacementKeys = {
+    COMPONENT_NAME: newFileName,
+    component_name: newFileName.toLowerCase(),
+    COMPONENT_CAP_NAME: newFileName.toUpperCase(),
+    cOMPONENT_NAME: newFileName[0].toLowerCase() + newFileName.substr(1),
   }
-  if (templateFileName.includes('component_name')) {
-    generatedFileName = templateFileName.replace(/component_name/g, newFileName.toLowerCase())
-  }
-  if (templateFileName.includes('COMPONENT_CAP_NAME')) {
-    generatedFileName = templateFileName.replace(/COMPONENT_CAP_NAME/g, newFileName.toUpperCase())
-  }
-  if (templateFileName.includes('cOMPONENT_NAME')) {
-    generatedFileName = templateFileName.replace(/cOMPONENT_NAME/g, newFileName[0].toLowerCase() + newFileName.substr(1))
-  }
-  return generatedFileName
+
+  return Object.keys(replacementKeys).reduce(
+    (acc, curr) => {
+      if (acc.includes(curr)) {
+        const regEx = new RegExp(curr, 'g')
+        return acc.replace(regEx, replacementKeys[curr])
+      }
+      return acc
+    },
+    templateFileName
+  )
 }
 
 /**

@@ -43,15 +43,15 @@ function readFile(path, fileName) {
 
 /**
  * generate the file name
- * @param {string} newFileName
- * @param {string} templateFileName
+ * @param {string} searchString
+ * @param {string} replacement
  */
-function generateFileName(newFileName, templateFileName) {
+function replaceKeys(searchString, replacement) {
   const replacementKeys = {
-    COMPONENT_NAME: newFileName,
-    component_name: newFileName.toLowerCase(),
-    COMPONENT_CAP_NAME: newFileName.toUpperCase(),
-    cOMPONENT_NAME: newFileName[0].toLowerCase() + newFileName.substr(1),
+    COMPONENT_NAME: replacement,
+    component_name: replacement.toLowerCase(),
+    COMPONENT_CAP_NAME: replacement.toUpperCase(),
+    cOMPONENT_NAME: replacement[0].toLowerCase() + replacement.substr(1),
   }
 
   return Object.keys(replacementKeys).reduce(
@@ -62,7 +62,7 @@ function generateFileName(newFileName, templateFileName) {
       }
       return acc
     },
-    templateFileName
+    searchString
   )
 }
 
@@ -81,12 +81,10 @@ async function generateFilesFromTemplate({ name, path, templatesPath }) {
     files.map(async (templateFileName) => {
       // Get the template content
       const content = await readFile(templatesPath, templateFileName)
-      const replaced = content.replace(/COMPONENT_NAME/g, name)
-                         .replace(/component_name/g, name.toLowerCase())
-                         .replace(/COMPONENT_CAP_NAME/g, name.toUpperCase())
-                         .replace(/cOMPONENT_NAME/g, name[0].toLowerCase() + name.substr(1))
+      const replaced = replaceKeys(content, name)
+
       // Exist ?
-      const newFileName = generateFileName(name, templateFileName)
+      const newFileName = replaceKeys(templateFileName, name)
       // Write the new file with the new content
       fs.outputFile(`${outputPath}/${newFileName}`, replaced)
     })
@@ -110,10 +108,7 @@ function getFileNames(fileNames = [], componentName) {
 
   const formattedFileNames = Object.keys(fileNames).reduce(
     (acc, curr) => {
-      acc[curr] = fileNames[curr].replace(/COMPONENT_NAME/g, componentName)
-                    .replace(/component_name/g, componentName.toLowerCase())
-                    .replace(/COMPONENT_CAP_NAME/g, componentName.toUpperCase())
-                    .replace(/cOMPONENT_NAME/g, componentName[0].toUpperCase() + componentName.substr(1))
+      acc[curr] = replaceKeys(fileNames[curr], componentName)
       return acc
     },
     { ...defaultFileNames }

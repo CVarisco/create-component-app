@@ -2,6 +2,17 @@
 
 With this library you can create your own templates and use them to generate your components in a second!
 
+`create-component-app` offers 4 replacement keys which can be used in the names of the files in your template, as well as within the templates themselves.  Each key corresponds to a formatted transformation of the component name that you enter when running `create-component-app`.
+
+#### Keys and Replacements
+  Replacement Key | Description
+  --- | ---
+  `COMPONENT_NAME` | Each instance of the string is replaced with the component name that you entered without modification.  This is the standard behavior.  (eg: `MyComponent` => `MyComponent` and replaces all instances of `COMPONENT_NAME` in files and file names.)
+  `COMPONENT_CAP_NAME` | Each instance of the string is replaced with an uppercased transformation of the component name that you entered. (eg: `MyComponent` => `MYCOMPONENTNAME` and replaces all instances of `COMPONENT_CAP_NAME` in files and file names.)
+  `component_name` | Each instance of the string is replaced with a lowercased transformation of the component name that you entered. (eg: `MyComponent` => `mycomponentname` and replaces all instances of `component_name` in files and file names.)
+  `cOMPONENT_NAME` | Each instance of the string is replaced with a lower camel case transformation of the component name that you entered. For clarity, the first letter is simply lowercased.  (eg: `MyComponent` => `myComponent` and replaces all instances of `cOMPONENT_NAME` in files and file names.)
+
+
 ### 1) Create your custom template folder
 
 Create a folder to contain all your custom templates.

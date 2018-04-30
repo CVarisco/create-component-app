@@ -43,14 +43,27 @@ function readFile(path, fileName) {
 
 /**
  * generate the file name
- * @param {string} newFileName
- * @param {string} templateFileName
+ * @param {string} searchString
+ * @param {string} replacement
  */
-function generateFileName(newFileName, templateFileName) {
-  if (templateFileName.includes('COMPONENT_NAME')) {
-    return templateFileName.replace(/COMPONENT_NAME/g, newFileName)
+function replaceKeys(searchString, replacement) {
+  const replacementKeys = {
+    COMPONENT_NAME: replacement,
+    component_name: replacement.toLowerCase(),
+    COMPONENT_CAP_NAME: replacement.toUpperCase(),
+    cOMPONENT_NAME: replacement[0].toLowerCase() + replacement.substr(1),
   }
-  return templateFileName
+
+  return Object.keys(replacementKeys).reduce(
+    (acc, curr) => {
+      if (acc.includes(curr)) {
+        const regEx = new RegExp(curr, 'g')
+        return acc.replace(regEx, replacementKeys[curr])
+      }
+      return acc
+    },
+    searchString
+  )
 }
 
 /**
@@ -68,9 +81,10 @@ async function generateFilesFromTemplate({ name, path, templatesPath }) {
     files.map(async (templateFileName) => {
       // Get the template content
       const content = await readFile(templatesPath, templateFileName)
-      const replaced = content.replace(/COMPONENT_NAME/g, name)
+      const replaced = replaceKeys(content, name)
+
       // Exist ?
-      const newFileName = generateFileName(name, templateFileName)
+      const newFileName = replaceKeys(templateFileName, name)
       // Write the new file with the new content
       fs.outputFile(`${outputPath}/${newFileName}`, replaced)
     })
@@ -94,8 +108,7 @@ function getFileNames(fileNames = [], componentName) {
 
   const formattedFileNames = Object.keys(fileNames).reduce(
     (acc, curr) => {
-      acc[curr] = fileNames[curr].replace(/COMPONENT_NAME/g, componentName)
-
+      acc[curr] = replaceKeys(fileNames[curr], componentName)
       return acc
     },
     { ...defaultFileNames }

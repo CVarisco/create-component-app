@@ -1,20 +1,19 @@
-import fs, { lstatSync, readdirSync, readFileSync } from 'fs-extra'
-import { join } from 'path'
+import fs, { lstatSync, readFileSync, readdirSync } from 'fs-extra'
 import glob from 'glob'
-import Logger from './logger'
+import { join } from 'path'
+import defaultOptions from './config.json'
 import {
   generateComponentTemplate,
-  generateStyleFile,
   generateIndexFile,
-  generateTestTemplate,
   generateStorybookTemplate,
+  generateStyleFile,
+  generateTestTemplate,
 } from './defaultTemplates'
-import defaultOptions from './config.json'
+import Logger from './logger'
 import { getConfig } from './utils'
 
 /**
- * fetch a list of dirs inside a dir
- *
+ * Fetch a list of dirs inside a dir
  * @param {any} source path of a dir
  * @returns {array} list of the dirs inside
  */
@@ -26,7 +25,7 @@ function getDirectories(source) {
 }
 
 /**
- * generate the file name
+ * Generate the file name
  * @param {string} newFileName
  * @param {string} templateFileName
  */
@@ -37,9 +36,12 @@ function replaceComponentName(content, stringToReplace) {
 /**
  * Generate component file from custom template.
  * Callback of generateFilesFromTemplate
+ * @param {string} name the name of the component used to create folder and file
+ * @param {string} outputPath where the component folder will be create
+ * @param {string} templatesPaths where the template is located
  * @param {string} templateFileName name of the component
  */
-function generateCustomFile(templateFileName) {
+function generateCustomFile(name, outputPath, templatesPath, templateFileName) {
   try {
     const content = readFileSync(templatesPath, templateFileName)
     const replaced = replaceComponentName(content, templateFileName)
@@ -61,7 +63,9 @@ function generateFilesFromCustomTemplate({ name, path, templatesPath }) {
   const files = glob.sync('**/*', { cwd: templatesPath, nodir: true })
   const config = getConfig(null, templatesPath, templatesPath)
   const outputPath = config.noMkdir ? `${path}` : `${path}/${name}`
-  files.forEach(generateCustomFile)
+  files.forEach(templateFileName =>
+    generateCustomFile(name, outputPath, templatesPath, templateFileName)
+  )
 }
 
 /**
@@ -78,11 +82,7 @@ function getFileNames(fileNames = [], componentName) {
   }
 
   const formattedFileNames = Object.keys(fileNames).reduce(
-    (acc, curr) => {
-      acc[curr] = fileNames[curr].replace(/COMPONENT_NAME/g, componentName)
-
-      return acc
-    },
+    (acc, curr) => (acc[curr] = replaceComponentName(fileNames[curr], componentName)),
     { ...defaultFileNames }
   )
 
@@ -121,30 +121,18 @@ function generateFiles(params) {
   } = params
   const destination = `${path}/${name}`
 
-  const { testFileName, componentFileName, styleFileName } = getFileNames(
-    fileNames,
-    name
-  )
+  const { testFileName, componentFileName, styleFileName } = getFileNames(fileNames, name)
 
   if (indexFile || connected) {
-    fs.outputFile(
-      `${destination}/index.js`,
-      generateIndexFile(componentFileName, connected)
-    )
+    fs.outputFile(`${destination}/index.js`, generateIndexFile(componentFileName, connected))
   }
 
   if (includeStories) {
-    fs.outputFile(
-      `${destination}/${name}.stories.${jsExtension}`,
-      generateStorybookTemplate(name)
-    )
+    fs.outputFile(`${destination}/${name}.stories.${jsExtension}`, generateStorybookTemplate(name))
   }
 
   if (includeTests) {
-    fs.outputFile(
-      `${destination}/${testFileName}.${jsExtension}`,
-      generateTestTemplate(name)
-    )
+    fs.outputFile(`${destination}/${testFileName}.${jsExtension}`, generateTestTemplate(name))
   }
 
   // Create js file

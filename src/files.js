@@ -1,6 +1,5 @@
-import fs, { lstatSync, readFileSync, readdirSync } from 'fs-extra'
+import fs, { readFileSync } from 'fs-extra'
 import glob from 'glob'
-import { join } from 'path'
 import defaultOptions from './config.json'
 import {
   generateComponentTemplate,
@@ -11,18 +10,6 @@ import {
 } from './defaultTemplates'
 import Logger from './logger'
 import { getConfig } from './utils'
-
-/**
- * Fetch a list of dirs inside a dir
- * @param {any} source path of a dir
- * @returns {array} list of the dirs inside
- */
-function getDirectories(source) {
-  const isDirectory = sourcePath => lstatSync(sourcePath).isDirectory()
-  return readdirSync(source)
-    .map(name => join(source, name))
-    .filter(isDirectory)
-}
 
 /**
  * Generate the file name
@@ -154,4 +141,4 @@ function generateFiles(params) {
   }
 }
 
-export { generateFiles, generateFilesFromCustomTemplate, getDirectories }
+export { generateFiles, generateFilesFromCustomTemplate }

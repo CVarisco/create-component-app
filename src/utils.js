@@ -1,10 +1,8 @@
-import inquirer from 'inquirer'
-import path from 'path'
 import cosmiconfig from 'cosmiconfig'
+import { lstatSync, readdirSync } from 'fs-extra'
 import { homedir } from 'os'
-import { templateQuestions } from './questions'
+import path, { join } from 'path'
 import Logger from './logger'
-import { getDirectories } from './files'
 
 function isIISNode(main) {
   return /\\iisnode\\/.test(main.filename)
@@ -32,20 +30,15 @@ function getDefaultPathTemplates() {
 const DEFAULT_PATH_TEMPLATES = getDefaultPathTemplates()
 
 /**
- * If the user want to use custom templates, return filtered questions
- * for only custom configuration
- * @param {object} config
- * @param {object} questions
+ * Fetch a list of dirs inside a dir
+ * @param {any} source path of a dir
+ * @returns {array} list of the dirs inside
  */
-function generateQuestionsCustom(config, questions) {
-  const mandatoryQuestions = [questions.name, questions.path]
-
-  return mandatoryQuestions.filter((question) => {
-    if (config[question.name]) {
-      return false
-    }
-    return true
-  })
+function getDirectories(source) {
+  const isDirectory = sourcePath => lstatSync(sourcePath).isDirectory()
+  return readdirSync(source)
+    .map(name => join(source, name))
+    .filter(isDirectory)
 }
 
 /**
@@ -62,18 +55,13 @@ function generateQuestions(config = {}, questions = {}) {
     return questionKeys.map(question => questions[question])
   }
 
-  // If type is custom, filter question mandatory to work
-  if (config.type === 'custom') {
-    return generateQuestionsCustom(config, questions)
-  }
-
   // filter questions from config object
-  const filteredQuestions = []
-  questionKeys.forEach((question) => {
-    if (!(question in config)) {
-      filteredQuestions.push(questions[question])
+  const filteredQuestions = questionKeys.reduce((acc, curr) => {
+    if (!(curr in config)) {
+      return [...acc, questions[curr]]
     }
-  })
+    return acc
+  }, [])
 
   return filteredQuestions
 }
@@ -134,22 +122,20 @@ function getConfig(configPath, searchPath = process.cwd(), stopDir = homedir()) 
 
     return { ...config, filepath }
   } catch (error) {
-    Logger.error('An error occured while parsing your config file. Using defaults...\n\n', error.message)
+    Logger.error(
+      'An error occured while parsing your config file. Using defaults...\n\n',
+      error.message
+    )
   }
   return {}
 }
 
 /**
- * List templates on terminal or get the template (templateName config) from the folder of templates
+ * Return the template name if exist on the list
  * @param {array} templatesList to filter
  * @param {string} templateName
  */
-async function getTemplate(templatesList, templateName = null) {
-  if (!templateName) {
-    const templatesArray = Object.entries(templatesList).map(([name, value]) => ({ name, value }))
-    const { template } = await inquirer.prompt(templateQuestions.template(templatesArray))
-    return template
-  }
+function getTemplate(templatesList, templateName = null) {
   if (templateName in templatesList) {
     return templatesList[templateName]
   }

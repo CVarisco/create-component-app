@@ -1,18 +1,11 @@
 #!/usr/bin/env node
-import 'babel-polyfill'
-import inquirer from 'inquirer'
-import yargs from 'yargs'
-
-import Logger from './logger'
-import { generateFiles, generateFilesFromCustomTemplate } from './files'
-import {
-  generateQuestions,
-  getTemplatesList,
-  getConfig,
-  getTemplate,
-} from './utils'
-
-import { questions } from './questions'
+import 'babel-polyfill';
+import inquirer from 'inquirer';
+import yargs from 'yargs';
+import { generateFiles, generateFilesFromCustomTemplate } from './files';
+import Logger from './logger';
+import { questions, templateQuestions } from './questions';
+import { generateQuestions, getConfig, getTemplate, getTemplatesList } from './utils';
 
 const args = yargs.argv
 const config = {
@@ -20,45 +13,31 @@ const config = {
   ...args,
 }
 
-/**
- * Search and return the template path from the templates lists
- * @param {string} templateName
- * @return {string} template path
- */
-async function getTemplatesPath(templateName = null) {
+async function getTemplateOption() {
   const { templatesDirPath } = config
   const templates = getTemplatesList(templatesDirPath)
-
-  return getTemplate(templates, templateName)
-}
-
-async function getTemplateOption() {
+  console.log(templates)
+  const templateList = Object.entries(templates).map(([name, value]) => ({ name, value }))
   const templateArg = args.t || args.template
+
   if (templateArg) {
-    return getTemplatesPath(templateArg)
+    return getTemplate(templates, templateArg)
   }
 
-  const { template } = await inquirer.prompt([
-    {
-      type: 'confirm',
-      name: 'template',
-      message: 'Do you wanna choose a template',
-      default: false,
-    },
-  ])
-  if (template) {
-    return getTemplatesPath()
+  const { template } = await inquirer.prompt(templateQuestions.template(templateList))
+
+  if (!template) {
+    return null
   }
-  return null
+
+  return getTemplate(templates, template)
 }
 
 async function startTemplateGenerator(templatesPath) {
   try {
     const { path } = config
     const requiredAnswers = await inquirer.prompt(
-      [questions.name, path ? undefined : questions.path].filter(
-        question => question
-      )
+      [questions.name, path ? undefined : questions.path].filter(question => question)
     )
 
     const results = {
@@ -76,6 +55,9 @@ async function startTemplateGenerator(templatesPath) {
 
 /**
  * Start the process to generate component folder and files:
+ * Ask if the user want use a template:
+ * - if yes, generate from template,
+ * - if no:
  * Filter question by config file
  * Get from the user the requirements to create the component folder and files
  * Generate files
@@ -83,6 +65,7 @@ async function startTemplateGenerator(templatesPath) {
 (async function start() {
   try {
     const template = await getTemplateOption()
+
     if (template) {
       return await startTemplateGenerator(template)
     }
@@ -94,18 +77,7 @@ async function startTemplateGenerator(templatesPath) {
       ...requirements,
     }
 
-    if (results.type === 'custom') {
-      const { templateName } = config
-      if (!templateName) {
-        throw new Error(
-          'Please add a templateName to the config if using the custom type'
-        )
-      }
-      const templatesPath = await getTemplatesPath(templateName)
-      await generateFilesFromCustomTemplate({ ...results, templatesPath })
-    } else {
-      await generateFiles(results)
-    }
+    await generateFiles(results)
     Logger.log('Your component is created!')
   } catch (e) {
     Logger.error(e.message)
@@ -113,4 +85,4 @@ async function startTemplateGenerator(templatesPath) {
   return null
 }())
 
-export default { generateFiles, generateFilesFromCustom }
+export default { generateFiles, generateFilesFromCustomTemplate }

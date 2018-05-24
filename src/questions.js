@@ -65,8 +65,15 @@ const templateQuestions = {
   template: templates => ({
     type: 'list',
     name: 'template',
-    message: 'Choose a template',
-    choices: templates,
+    message: 'Do you wanna choose a template',
+    choices: ['None', ...templates],
+    filter: (value) => {
+      if (value === 'None') {
+        return false
+      }
+
+      return value
+    },
   }),
 }
 

@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-import 'babel-polyfill';
-import inquirer from 'inquirer';
-import yargs from 'yargs';
-import { generateFiles, generateFilesFromCustomTemplate } from './files';
-import Logger from './logger';
-import { questions, templateQuestions } from './questions';
-import { generateQuestions, getConfig, getTemplate, getTemplatesList } from './utils';
+import 'babel-polyfill'
+import inquirer from 'inquirer'
+import yargs from 'yargs'
+import { generateFiles, generateFilesFromCustomTemplate } from './files'
+import Logger from './logger'
+import { questions, templateQuestions } from './questions'
+import { generateQuestions, getConfig, getTemplate, getTemplatesList } from './utils'
 
 const args = yargs.argv
 const config = {
@@ -13,24 +13,27 @@ const config = {
   ...args,
 }
 
+/**
+ * Get the template option if selected and return the path
+ * @returns {String} path of the template selected by the user
+ */
 async function getTemplateOption() {
   const { templatesDirPath } = config
   const templates = getTemplatesList(templatesDirPath)
-  console.log(templates)
   const templateList = Object.entries(templates).map(([name, value]) => ({ name, value }))
   const templateArg = args.t || args.template
 
+  // Check if exist and return the path
   if (templateArg) {
     return getTemplate(templates, templateArg)
   }
 
   const { template } = await inquirer.prompt(templateQuestions.template(templateList))
-
   if (!template) {
     return null
   }
-
-  return getTemplate(templates, template)
+  // Return path of template
+  return template
 }
 
 async function startTemplateGenerator(templatesPath) {
@@ -39,7 +42,6 @@ async function startTemplateGenerator(templatesPath) {
     const requiredAnswers = await inquirer.prompt(
       [questions.name, path ? undefined : questions.path].filter(question => question)
     )
-
     const results = {
       ...config,
       ...requiredAnswers,
@@ -65,7 +67,6 @@ async function startTemplateGenerator(templatesPath) {
 (async function start() {
   try {
     const template = await getTemplateOption()
-
     if (template) {
       return await startTemplateGenerator(template)
     }

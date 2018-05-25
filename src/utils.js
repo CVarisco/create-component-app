@@ -42,6 +42,18 @@ function getDirectories(source) {
 }
 
 /**
+ * Reduce callback to reduce the list of directories
+ * @param {object} prev
+ * @param {array} dir
+ */
+function createListOfDirectories(prev, dir) {
+  return {
+    ...prev,
+    [dir.split(path.sep).pop()]: dir,
+  }
+}
+
+/**
  * Generate questions filtered by the config file if exist
  *
  * @param {object} config
@@ -67,18 +79,6 @@ function generateQuestions(config = {}, questions = {}) {
 }
 
 /**
- * Reduce callback to reduce the list of directories
- * @param {object} prev
- * @param {array} dir
- */
-function createListOfDirectories(prev, dir) {
-  return {
-    ...prev,
-    [dir.split(path.sep).pop()]: dir,
-  }
-}
-
-/**
  * Returns the list of templates available
  * @param {any} customPath
  */
@@ -90,7 +90,7 @@ function getTemplatesList(customPath = null) {
     return { ...predefined, ...custom }
   } catch (error) {
     Logger.warn('The custom templates path that you supply is unreachable')
-    Logger.warn('falling back to defaults templates')
+    Logger.warn('Falling back to defaults templates')
     return predefined
   }
 }

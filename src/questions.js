@@ -66,9 +66,10 @@ const templateQuestions = {
     type: 'list',
     name: 'template',
     message: 'Do you wanna choose a template',
-    choices: ['None', ...templates],
+    pageSize: 100,
+    choices: ["-- No, I don't want --", ...templates],
     filter: (value) => {
-      if (value === 'None') {
+      if (value === "-- No, I don't want --") {
         return false
       }
 

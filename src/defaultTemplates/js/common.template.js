@@ -39,20 +39,19 @@ ${cssExtension ? `import styles from './${styleFileName}.${cssExtension}'` : ''}
 }
 
 function generateContentComponent(componentMethods, COMPONENT_NAME) {
-  if (componentMethods) {
+  if (componentMethods.length) {
     return generateComponentMethods(componentMethods)
   }
 
-  return `
-constructor(props) {
-    super(props)
-}
+  return `constructor(props) {
+      super(props)
+  }
 
-render() {
-    return (
-        <div className="${COMPONENT_NAME}"></div>
-    );
-}  
+  render() {
+      return (
+          <div className="${COMPONENT_NAME}"></div>
+      );
+  }
 `
 }
 

@@ -38,6 +38,24 @@ import PropTypes from 'prop-types'
 ${cssExtension ? `import styles from './${styleFileName}.${cssExtension}'` : ''}`
 }
 
+function generateContentComponent(componentMethods, COMPONENT_NAME) {
+  if (componentMethods) {
+    return generateComponentMethods(componentMethods)
+  }
+
+  return `
+constructor(props) {
+    super(props)
+}
+
+render() {
+    return (
+        <div className="${COMPONENT_NAME}"></div>
+    );
+}  
+`
+}
+
 function generateClassComponent(
   COMPONENT_NAME,
   componentType,
@@ -53,15 +71,7 @@ function generateClassComponent(
   })}
 
 class ${COMPONENT_NAME} extends ${COMPONENT_TYPES[componentType]} {
-    constructor(props) {
-        super(props)
-    }
-    ${generateComponentMethods(componentMethods)}
-    render() {
-        return (
-            <div className="${COMPONENT_NAME}"></div>
-        );
-    }
+  ${generateContentComponent(componentMethods, COMPONENT_NAME)}
 }
 
 ${COMPONENT_NAME}.propTypes = {}

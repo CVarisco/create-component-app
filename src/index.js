@@ -32,22 +32,11 @@ async function getTemplatesPath(templateName = null) {
 }
 
 async function getTemplateOption() {
-  const templateArg = args.t || args.template
+  const templateArg = config.t || config.template || config.templateName
   if (templateArg) {
     return getTemplatesPath(templateArg)
   }
 
-  const { template } = await inquirer.prompt([
-    {
-      type: 'confirm',
-      name: 'template',
-      message: 'Do you wanna choose a template',
-      default: false,
-    },
-  ])
-  if (template) {
-    return getTemplatesPath()
-  }
   return null
 }
 

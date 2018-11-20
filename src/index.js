@@ -32,7 +32,7 @@ async function getTemplatesPath(templateName = null) {
 }
 
 async function getTemplateOption() {
-  const templateArg = args.t || args.template
+  const templateArg = config.t || config.template || config.templateName
   if (templateArg) {
     return getTemplatesPath(templateArg)
   }
@@ -48,6 +48,7 @@ async function getTemplateOption() {
   if (template) {
     return getTemplatesPath()
   }
+
   return null
 }
 

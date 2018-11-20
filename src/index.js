@@ -37,6 +37,18 @@ async function getTemplateOption() {
     return getTemplatesPath(templateArg)
   }
 
+  const { template } = await inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'template',
+      message: 'Do you wanna choose a template',
+      default: false,
+    },
+  ])
+  if (template) {
+    return getTemplatesPath()
+  }
+
   return null
 }
 

@@ -22,6 +22,9 @@ This is a tool to generate different types of React components from the terminal
   <img src="https://github.com/CVarisco/create-component-app/blob/master/docs/cca-no-templates.gif" alt="create-component-app" width="1024" />
 </p>
 
+## Table of contents
+
+- [Table of contents](#table-of-contents)
 - [Install](#install)
 - [Usage](#usage)
   - [Create your components guided from terminal with a lot of choices](#create-your-components-guided-from-terminal-with-a-lot-of-choices)
@@ -34,7 +37,6 @@ This is a tool to generate different types of React components from the terminal
 - [Contributing](#contributing)
   - [Contributors](#contributors)
 - [License](#license)
-<br />
 
 ## Install
 

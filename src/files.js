@@ -69,7 +69,7 @@ function getFileNames(fileNames = {}, componentName) {
     (acc, curr) => {
       acc[curr] = replaceComponentName(fileNames[curr], componentName)
 
-      return acc;
+      return acc
     },
     {
       testFileName: `${defaultOptions.testFileName}.${componentName}`,

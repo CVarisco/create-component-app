@@ -23,6 +23,7 @@
     "comma-dangle": [
       2,
       "always-multiline"
-    ]
+    ],
+    "no-param-reassign": 0
   }
 }

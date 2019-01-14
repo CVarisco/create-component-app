@@ -13,8 +13,10 @@
 
 [(Introduction article v1)](https://hackernoon.com/create-component-app-v1-is-out-now-6ca0217992e9)
 
-**How much time do you spend copying and pasting the component folder to create a new one ?**<br />
+<p align="center">
+<strong align="center">How much time do you spend copying and pasting the component folder to create a new one ?</strong><br />
 This is a tool to generate different types of React components from the terminal.<br />
+</p>
 
 <p align="center">
   <img src="https://github.com/CVarisco/create-component-app/blob/master/docs/cca-no-templates.gif" alt="create-component-app" width="1024" />

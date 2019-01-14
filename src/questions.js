@@ -59,6 +59,12 @@ const questions = {
     message: 'Where do you want create your component ?',
     default: './src/components',
   },
+  prettierConfig: {
+    type: 'confirm',
+    name: 'prettierConfig',
+    message: 'Do you want use your prettier configuration ?',
+    default: false,
+  },
 }
 
 const templateQuestions = {

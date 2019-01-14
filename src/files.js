@@ -94,8 +94,9 @@ function getFileNames(fileNames = {}, componentName) {
  * @param {boolean} connected: include or not the connect function of redux
  * @param {boolean} includeStories: include or not the storybook file
  * @param {boolean} includeTests: include or not the test file
+ * @param {string} prettierConfig: path of the prettierc file
  */
-function generateFiles(params) {
+async function generateFiles(params) {
   const {
     type,
     name,
@@ -108,6 +109,7 @@ function generateFiles(params) {
     connected,
     includeStories,
     includeTests,
+    prettierConfig,
   } = params
   const destination = `${path}${separator}${name}`
   const { testFileName, componentFileName, styleFileName } = getFileNames(fileNames, name)
@@ -120,28 +122,22 @@ function generateFiles(params) {
   }
 
   if (includeStories) {
-    fs.outputFile(
-      `${destination}${separator}${name}.stories.${jsExtension}`,
-      generateStorybookTemplate(name)
-    )
+    fs.outputFile(`${destination}${separator}${name}.stories.js`, generateStorybookTemplate(name))
   }
 
   if (includeTests) {
-    fs.outputFile(
-      `${destination}${separator}${testFileName}.${jsExtension}`,
-      generateTestTemplate(name)
-    )
+    fs.outputFile(`${destination}${separator}${testFileName}.js`, generateTestTemplate(name))
   }
 
+  const template = await generateComponentTemplate(type, componentFileName, {
+    cssExtension,
+    componentMethods,
+    styleFileName,
+    prettierConfig,
+  })
+
   // Create js file
-  fs.outputFile(
-    `${destination}${separator}${componentFileName}.${jsExtension}`,
-    generateComponentTemplate(type, componentFileName, {
-      cssExtension,
-      componentMethods,
-      styleFileName,
-    })
-  )
+  fs.outputFile(`${destination}${separator}${componentFileName}.${jsExtension}`, template)
 
   // Create css file
   if (cssExtension) {

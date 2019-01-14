@@ -18,14 +18,19 @@ This is a tool to generate different types of React components from the terminal
 ### Available extension 
 <a href="https://github.com/CVarisco/vs-component-app"><img src="http://ubuntuhandbook.org/wp-content/uploads/2017/05/vscode-icon245.png" width="50px"> </a><br />
 
-What you can do with this tool ?<br />
 
-- [You can use templates from the community 🎉](#you-can-use-templates-from-the-community)
-- [Create your components guided from terminal with a lot of choices](#create-your-components-guided-from-terminal-with-a-lot-of-choices)
-- [You can create a configuration file in your current project directory](#you-can-create-a-configuration-file-in-your-current-project-directory)
-- [You can also pass a configuration file from params](#you-can-also-pass-a-config-file)
-- [You can use your own custom templates](#you-can-use-your-own-custom-templates)
-- [Share your template to the community](https://github.com/CVarisco/create-component-app/blob/master/docs/CUSTOM-TEMPLATES-COMMUNITY.md)
+- [Install](#install)
+- [Usage](#usage)
+  - [Create your components guided from terminal with a lot of choices](#create-your-components-guided-from-terminal-with-a-lot-of-choices)
+  - [Create components based on a configuration file in your current project directory](#create-components-based-on-a-configuration-file-in-your-current-project-directory)
+  - [Basic Configuration](#basic-configuration)
+  - [Pass a config file as an argument](#pass-a-config-file-as-an-argument)
+  - [Pass option arguments from the command line](#pass-option-arguments-from-the-command-line)
+  - [Use your own custom templates](#use-your-own-custom-templates)
+  - [Use templates from the community](#use-templates-from-the-community)
+- [Contributing](#contributing)
+  - [Contributors](#contributors)
+- [License](#license)
 <br />
 
 <p align="center">
@@ -51,7 +56,6 @@ $ create-component-app
     - stateless
     - class
     - pure
-    - custom
 - Set name of the new component
 - Integrate `connect` function of redux
 - Include an index file
@@ -67,9 +71,9 @@ $ create-component-app
 - Include a test file (with enzyme)
 - Set the destionation `path` of the new component
 
-### You can create a configuration file in your current project directory
+### Create components based on a configuration file in your current project directory
 
-Create-component-app uses [cosmiconfig](https://github.com/davidtheclark/cosmiconfig) for configuration file support.
+create-component-app uses [cosmiconfig](https://github.com/davidtheclark/cosmiconfig) for configuration file support.
 This means you can configure cca via:
 
 * A `.ccarc` file, written in YAML or JSON, with optional extensions: `.yaml/.yml/.json`.
@@ -90,6 +94,7 @@ Currently supported options are:
   --- | ---
   `type` | Default type of the component `["stateless", "class", "pure"]`
   `templatesDirPath` | Default path to get the templates from the custom templates folder
+  `template` | Name of the template that you want use
   `path` | Default path to create component file and folder
   `jsExtension` | Default extension for your javascript file `["js", "jsx"]`
   `cssExtension` | Default extension for your css file `["css", "scss", "sass", "less", false]`. Set to false if you don't want a style file
@@ -103,7 +108,7 @@ Currently supported options are:
   `fileNames.componentFileName` |  specify the component file name
   `fileNames.styleFileName` | specify the style file name !!IMPORTANT: Include cssExtension.
 
-### You can also pass a config file
+### Pass a config file as an argument
 
 1) Create a JSON file `config.json`:  
 2) and pass the path to config param
@@ -114,7 +119,9 @@ $ create-component-app --config path/to/your/config.json
 
 **Passing a config file via the CLI overrides the configuration file loaded by [cosmiconfig](https://github.com/davidtheclark/cosmiconfig)**
 
-### You can pass params from the command line
+### Pass option arguments from the command line
+
+You can pass all the available options from the list above.
 
 ```sh
 $ create-component-app --path path/destionation
@@ -122,23 +129,19 @@ $ create-component-app --path path/destionation
 
 **Passing a param via the CLI overrides the configuration file loaded by [cosmiconfig](https://github.com/davidtheclark/cosmiconfig)**
 
-### You can use your own custom templates
+### Use your own custom templates
 
 Simple steps to create your own templates [docs/custom-templates](https://github.com/CVarisco/create-component-app/blob/master/docs/CUSTOM-TEMPLATES.md)
 
-### You can use templates from the community
-Now, the first question that you receive is `Do you wanna choose a template?` if you answer yes, you can see the list of templates from the community.
+### Use templates from the community
+As first question, the tool asks you if you want use a template available from the community
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/7335613/32015409-51e4b5e6-b9c1-11e7-9ccf-bb21eff2c66a.gif" alt="create-component-app-templates" width="1024" />
 </p>
 
-- (Optional) Add to the settings `templatesDirPath` - a custom path to the user custom templates folder.
-- (Optional) Add to the settings `templates` - a list of used templates (with a default) to filter the list
-- (Optional) The user can choose between the available templates or use `create-component-app -t templateName`
-
 ## Contributing
-Now, the community can offer their templates! [How?](https://github.com/CVarisco/create-component-app/blob/master/docs/CUSTOM-TEMPLATES-COMMUNITY.md)
+Do you want add your template to the project? [How?](https://github.com/CVarisco/create-component-app/blob/master/docs/CUSTOM-TEMPLATES-COMMUNITY.md)
 
 Check the [issue list](https://github.com/CVarisco/create-component-app/issues) to contribute on some activities or to advice new features!
 The library is open to everybody, contribute improve your skills.   

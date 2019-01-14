@@ -50,7 +50,7 @@ function generateCustomFile(name, outputPath, templatesPath, templateFileName) {
  */
 function generateFilesFromCustomTemplate({ name, path, templatesPath }) {
   const files = glob.sync('**/*', { cwd: templatesPath, nodir: true })
-  const config = getConfig(null, templatesPath, templatesPath)
+  const config = getConfig(templatesPath, templatesPath)
   const outputPath = config.noMkdir ? `${path}` : `${path}${separator}${name}`
 
   files.forEach(templateFileName =>
@@ -64,19 +64,19 @@ function generateFilesFromCustomTemplate({ name, path, templatesPath }) {
  * @param {string} componentName
  * @return {object} with the correct filenames
  */
-function getFileNames(fileNames = [], componentName) {
-  const defaultFileNames = {
-    testFileName: `${defaultOptions.testFileName}.${componentName}`,
-    componentFileName: componentName,
-    styleFileName: componentName,
-  }
+function getFileNames(fileNames = {}, componentName) {
+  return Object.keys(fileNames).reduce(
+    (acc, curr) => {
+      acc[curr] = replaceComponentName(fileNames[curr], componentName)
 
-  const formattedFileNames = Object.keys(fileNames).reduce(
-    (acc, curr) => (acc[curr] = replaceComponentName(fileNames[curr], componentName)),
-    { ...defaultFileNames }
+      return acc;
+    },
+    {
+      testFileName: `${defaultOptions.testFileName}.${componentName}`,
+      componentFileName: componentName,
+      styleFileName: componentName,
+    }
   )
-
-  return formattedFileNames
 }
 
 /**
@@ -110,7 +110,6 @@ function generateFiles(params) {
     includeTests,
   } = params
   const destination = `${path}${separator}${name}`
-
   const { testFileName, componentFileName, styleFileName } = getFileNames(fileNames, name)
 
   if (indexFile || connected) {

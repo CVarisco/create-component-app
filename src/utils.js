@@ -67,7 +67,6 @@ function generateQuestions(config = {}, questions = {}) {
     return questionKeys.map(question => questions[question])
   }
 
-  // filter questions from config object
   const filteredQuestions = questionKeys.reduce((acc, curr) => {
     if (!(curr in config)) {
       return [...acc, questions[curr]]
@@ -99,28 +98,18 @@ function getTemplatesList(customPath = null) {
  * Dynamically import a config file if exist
  *
  * @param {any} configPath
- * @param {any} [searchPath=process.cwd()]
  * @param {any} [stopDir=homedir()]
  * @returns {Object} config
  */
-function getConfig(configPath, searchPath = process.cwd(), stopDir = homedir()) {
-  const useCustomPath = !!configPath
-  const explorer = cosmiconfig('cca', { sync: true, stopDir })
-
+function getConfig(configPath, stopDir = homedir()) {
+  const explorer = cosmiconfig('cca', { stopDir })
   try {
-    const searchPathAbsolute = !useCustomPath && searchPath
-    const configPathAbsolute = useCustomPath && path.join(process.cwd(), configPath)
-    // search from the root of the process if the user didnt specify a config file,
-    // or use the custom path if a file is passed.
-    const result = explorer.load(searchPathAbsolute, configPathAbsolute)
+    const result = explorer.searchSync(configPath)
 
-    // dont throw if the explorer didnt find a configfile,
-    // instead use default config
-    const config = result ? result.config : {}
-    const filepath = result ? result.filepath : {}
     if (!result) Logger.log('No config file detected, using defaults.')
 
-    return { ...config, filepath }
+    const config = result ? result.config : {}
+    return { ...config }
   } catch (error) {
     Logger.error(
       'An error occured while parsing your config file. Using defaults...\n\n',

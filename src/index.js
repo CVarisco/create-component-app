@@ -21,18 +21,18 @@ async function getTemplateOption() {
   const { templatesDirPath } = config
   const templates = getTemplatesList(templatesDirPath)
   const templateList = Object.entries(templates).map(([name, value]) => ({ name, value }))
-  const templateArg = args.t || args.template
+  const templateArg = config.t || config.template || config.templateName
 
-  // Check if exist and return the path
   if (templateArg) {
     return getTemplate(templates, templateArg)
   }
 
   const { template } = await inquirer.prompt(templateQuestions.template(templateList))
+
   if (!template) {
     return null
   }
-  // Return path of template
+
   return template
 }
 
@@ -67,6 +67,7 @@ async function startTemplateGenerator(templatesPath) {
 (async function start() {
   try {
     const template = await getTemplateOption()
+
     if (template) {
       return await startTemplateGenerator(template)
     }

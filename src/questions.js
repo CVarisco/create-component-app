@@ -27,7 +27,7 @@ const questions = {
     type: 'list',
     name: 'jsExtension',
     message: 'What kind of extension do you use for js files ?',
-    choices: ['js', 'jsx'],
+    choices: ['js', 'jsx', 'tsx'],
   },
   cssExtension: {
     type: 'list',
